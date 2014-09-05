@@ -32,7 +32,7 @@ class Products extends HD_Controller {
 	 */
 	public function add() {
 		$this->form_validation->set_rules('name', 'name', 'required|trim|max_length[50]|min_length[2]|is_unique[ci_products.name]');
-		$this->form_validation->set_rules('unit_in_stocks', 'unit in stocks', 'required|trim|max_length[50]|min_length[1]|numeric');
+		$this->form_validation->set_rules('service_price', 'service price', 'required|trim|max_length[50]|min_length[1]|numeric');
 		$this->form_validation->set_rules('description', '', 'trim');
 		$this->form_validation->set_rules('status', '', 'trim');
 		$this->form_validation->set_rules('cid', '', 'trim');
@@ -63,6 +63,7 @@ class Products extends HD_Controller {
 		$this->_data['products'] = $this->mproducts->select_by_id($id);
 
 		$this->form_validation->set_rules('name', 'name', 'required|trim|max_length[50]|min_length[2]|callback_uniqueExcept[ci_products.name, pid]');
+		$this->form_validation->set_rules('service_price', 'service price', 'required|trim|max_length[50]|min_length[1]|numeric');
 		$this->form_validation->set_rules('description', '', 'trim');
 		$this->form_validation->set_rules('cid', '', 'trim');
 		$this->form_validation->set_rules('status', '', 'trim');

@@ -61,6 +61,7 @@ class Login extends CI_Controller {
 				'mul_reports' => $result->mul_reports,
 				'mul_deposits' => $result->mul_deposits,
 				'mul_users' => $result->mul_users,
+				'mul_members' => '1',
 				'mul_settings' => $result->mul_settings
 			));
 			redirect('welcome/');

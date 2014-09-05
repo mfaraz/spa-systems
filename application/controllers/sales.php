@@ -25,8 +25,6 @@ class Sales extends HD_Controller {
 
 		$this->form_validation->set_rules('name', 'Product', 'required|min_length[1]|max_length[50]|trim');
 		$this->form_validation->set_rules('cid', '', 'trim');
-		$this->form_validation->set_rules('qty', 'Quantity', 'required|min_length[1]|max_length[5]|trim|numeric');
-		$this->form_validation->set_rules('unit_price', 'Unit Price', 'required|min_length[1]|max_length[25]|trim|numeric');
 		$this->form_validation->set_select('cid');
 		if ($this->form_validation->run() == FALSE) {
 			$this->_data['categories'] = $this->mcategories->select(1);
