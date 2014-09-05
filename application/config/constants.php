@@ -47,7 +47,7 @@ define('FOPEN_READ_WRITE_CREATE_STRICT', 'x+b');
   | These modes are used when working with load stylesheet, javascript and images
   |
  */
-defined('PROJECT_NAME') ? NULL : define('PROJECT_NAME', 'International Optic & Watches Shop');
+defined('PROJECT_NAME') ? NULL : define('PROJECT_NAME', 'POS for spa');
 defined('CSS_PATH') ? NULL : define('CSS_PATH', 'resources/css/');
 defined('JS_PATH') ? NULL : define('JS_PATH', 'resources/js/');
 defined('IMG_PATH') ? NULL : define('IMG_PATH', 'resources/img/');
