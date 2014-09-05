@@ -87,7 +87,7 @@
 							</div>
 						</div>
 						<div class="col-lg-6">
-							<div class="panel panel-default">
+							<!--<div class="panel panel-default">
 								<div class="panel-heading">
 									<h3 class="panel-title">
 										<a data-toggle="collapse" class="accordion-toggle" href="#collapseFive">
@@ -106,7 +106,7 @@
 										</div>
 									</div>
 								</div>
-							</div>
+							</div>-->
 							<div class="panel panel-default">
 								<div class="panel-heading">
 									<h3 class="panel-title">
