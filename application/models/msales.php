@@ -110,10 +110,7 @@ class Msales extends CI_Model {
 		$this->_data = array(
 			'iid' => $this->session->userdata('cur_invoice_id'),
 			'cid' => $this->input->post('cid'),
-			'name' => $this->input->post('name'),
-			'qty' => $this->input->post('qty'),
-			'unit_price' => $this->input->post('unit_price'),
-			'sub_total' => ($this->input->post('qty') * $this->input->post('unit_price'))
+			'name' => $this->input->post('name')
 		);
 		$this->db->insert('ci_invoice_details', $this->_data);
 	}

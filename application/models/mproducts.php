@@ -27,7 +27,7 @@ class Mproducts extends CI_Model {
 	}
 
 	public function select_by_id($id) {
-		$result = $this->db->select(array('pid', 'p.cid', 'p.name', 'p.unit_in_stocks', 'p.description', 'p.status'))
+		$result = $this->db->select(array('pid', 'p.cid', 'p.name', 'p.service_price', 'p.description', 'p.status'))
 			->from('ci_products p')
 			->join('ci_categories c', 'c.cid = p.cid')
 			->where('pid', $id)
