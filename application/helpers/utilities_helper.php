@@ -25,6 +25,9 @@ if (!function_exists('form_select')) {
 			case 'product':
 				$id = 'pid';
 				break;
+			case 'group':
+				$id = 'gid';
+				break;
 		}
 		$option = array();
 		foreach ($items as $item) {
