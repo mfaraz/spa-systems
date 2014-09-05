@@ -27,6 +27,23 @@
 		$i = 1;
 		?>
 		<table class="table table-header">
+			
+			<tr>
+				<td colspan="2" class="hidden-print align-left" style="width: 50%;">
+					Cashier: <?php echo $cashier; ?><br>
+					Customer: <?php echo $customer_phone ?>
+				</td>
+				<td colspan="2" class="visible-print align-left" style="width: 50%;">
+					Cashier: <?php echo $cashier; ?><br>
+					Customer: <?php echo $customer_phone ?>
+				</td>
+				<td colspan="2" class="align-left">
+					Date: <?php echo $invoice_date; ?><br>
+					N&ordm;: <?php echo $invoice_number; ?>
+				</td>
+			</tr>
+		</table>
+		<table class="table table-header">
 			<caption>
 				<?php echo img(array('src' => IMG_PATH . 'logo.jpg', 'align' => 'center')) . br(1); ?>
 				<?php echo COMPANY_ADDRESS . br(); ?>
