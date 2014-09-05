@@ -10,8 +10,8 @@
 		<thead>
 			<tr>
 				<th>N&ordm;</th>
-				<th>Name</th>
-				<th>Unit in stocks</th>
+				<th>Service Name</th>
+				<th>Service Price</th>
 				<th>Description</th>
 				<th>Created Date</th>
 				<th>Modified Date</th>
@@ -28,7 +28,7 @@
 					<tr>
 						<td><?php echo $i++; ?></td>
 						<td class="align-left"><?php echo $product->name; ?></td>
-						<td class="<?php echo $product->unit_in_stocks <= 5 ? 'color-red' : ''; ?>"><?php echo $product->unit_in_stocks; ?></td>
+						<td class="<?php echo $product->service_price <= 5 ? 'color-red' : ''; ?>"><?php echo $product->service_price; ?></td>
 						<td><?php echo ($product->description) ? $product->description : '---'; ?></td>
 						<td><?php echo mdate('%d-%M-%Y', $product->crdate); ?></td>
 						<td><?php echo ($product->modate) ? mdate('%d-%M-%Y', $product->modate) : '---'; ?></td>

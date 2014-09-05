@@ -14,15 +14,15 @@
 				</div>
 				<div class="panel-body">
 					<div class="form-group <?php echo form_is_error('name'); ?>">
-						<?php echo form_label('Name <span class="required">*</span>', 'name', array('class' => 'col-md-3 control-label')); ?>
+						<?php echo form_label('Service Name <span class="required">*</span>', 'name', array('class' => 'col-md-3 control-label')); ?>
 						<div class="col-md-9">
 							<?php echo form_input('name', set_value('name'), 'id="name" class="form-control input-sm" placeholder="Name" pattern=".{2,50}" title="Allow enter between 2 to 50 characters"') . form_error('name'); ?>
 						</div>
 					</div>
 					<div class="form-group <?php echo form_is_error('name'); ?>">
-						<?php echo form_label('Unit in Stock <span class="required">*</span>', 'unit_in_stocks', array('class' => 'col-md-3 control-label')); ?>
+						<?php echo form_label('Service Price <span class="required">*</span>', 'service_price', array('class' => 'col-md-3 control-label')); ?>
 						<div class="col-md-9">
-							<?php echo form_input('unit_in_stocks', set_value('unit_in_stocks'), 'id="unit_in_stocks" class="form-control input-sm" placeholder="Unit in stock" pattern=".{1,50}" title="Allow enter between 1 to 50 character(s)"') . form_error('unit_in_stocks'); ?>
+							<?php echo form_input('service_price', set_value('service_price'), 'id="service_price" class="form-control input-sm" placeholder="Service Price" pattern=".{1,50}" title="Allow enter between 1 to 50 character(s)"') . form_error('service_price'); ?>
 						</div>
 					</div>
 					<div class="form-group">
