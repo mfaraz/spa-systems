@@ -19,15 +19,6 @@
 					</li>
 					<?php
 				endif;
-				if ($this->session->userdata('mul_deposits')):
-					?>
-					<li class="<?php echo $this->uri->segment(1) == 'deposits' ? 'active' : '' ?>">
-						<?php
-						echo anchor('deposits/', '<i class="fa fa-history fa-3x"></i>Deposits', 'title="Deposits"');
-						?>
-					</li>
-				<?php
-				endif;
 				if ($this->session->userdata('mul_products')):
 					?>
 					<li class="<?php echo $this->uri->segment(1) == 'products' ? 'active' : '' ?>">
@@ -51,6 +42,15 @@
 					<li class="<?php echo $this->uri->segment(1) == 'reports' ? 'active' : '' ?>">
 						<?php
 						echo anchor('reports/', '<i class="fa fa-bar-chart-o fa-3x"></i>Reports', 'title="Reports"');
+						?>
+					</li>
+					<?php
+				endif;
+				if ($this->session->userdata('mul_members')):
+					?>
+					<li class="<?php echo $this->uri->segment(1) == 'members' ? 'active' : '' ?>">
+						<?php
+						echo anchor('members/', '<i class="fa fa-users fa-3x"></i>Members', 'title="Members"');
 						?>
 					</li>
 					<?php
