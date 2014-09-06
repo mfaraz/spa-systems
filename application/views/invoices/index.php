@@ -77,3 +77,15 @@
 		</div>
 	</div>
 </div>
+<script>
+	$(function() {
+		var availableTags = [
+					"011 74 82 00",
+					"069 516 303",
+					"096 66 55 96"
+		];
+		$( "#customer_phone" ).autocomplete({
+			source: availableTags
+		});
+	});
+</script>
