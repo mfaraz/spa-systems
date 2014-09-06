@@ -8,7 +8,7 @@ class Invoices extends HD_Controller {
 	public function __construct() {
 		parent::__construct();
 		$this->_data['title'] = 'Invoice Management';
-		$this->load->model(array('msales', 'mdeposits'));
+		$this->load->model(array('msales', 'mdeposits', 'mmembers'));
 	}
 
 	/**
@@ -18,6 +18,7 @@ class Invoices extends HD_Controller {
 		// check in case invoice exist
 		$this->_data['invoice_items'] = $this->msales->check_purchase();
 		$this->_data['sub_total'] = $this->msales->get_total();
+		$this->_data['members'] = $this->mmembers->select();
 
 		$this->form_validation->set_rules('customer_phone', 'Customer Phone', 'required|trim|min_length[9]|numeric');
 		$this->form_validation->set_rules('cash_receive', 'Cash Received', 'required|trim|numeric');

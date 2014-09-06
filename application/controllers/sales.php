@@ -36,7 +36,7 @@ class Sales extends HD_Controller {
 				$this->msales->save_invoice_details();
 			}
 			$this->session->set_flashdata('message', alert_message("Product has been added to invoice!", 'success'));
-			redirect('sales/');
+			redirect('invoices/');
 		}
 	}
 
