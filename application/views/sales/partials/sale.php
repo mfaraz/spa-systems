@@ -20,3 +20,15 @@
 		
 	</div>
 </div>
+<script>
+	$(function() {
+		var availableTags = [
+			"Spa",
+			"Stim",
+			"Sona"
+		];
+		$( "#name" ).autocomplete({
+			source: availableTags
+		});
+	});
+</script>
