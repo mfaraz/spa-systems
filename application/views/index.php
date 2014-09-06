@@ -6,6 +6,7 @@
 		<?php
 		echo stylesheets();
 		echo site_title($title);
+		echo javascripts();
 		?>
 	</head>
 	<body class="main">
