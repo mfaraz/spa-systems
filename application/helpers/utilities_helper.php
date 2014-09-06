@@ -155,6 +155,7 @@ if (!function_exists('stylesheets')) {
 		$links .= link_tag(CSS_PATH . 'datepicker.css', 'all') . "\r\n";
 		$links .= link_tag(CSS_PATH . 'jquery-ui.min.css', 'all') . "\r\n";
 		$links .= link_tag(CSS_PATH . 'custom.min.css', 'all') . "\r\n";
+		$links .= link_tag(CSS_PATH . 'jquery-ui.css', 'all') . "\r\n";
 		$links .= '<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
 <!--[if lt IE 9]>
 	<script src="' . JS_PATH . 'html5shiv.js"></script>
@@ -184,6 +185,8 @@ if (!function_exists('javascripts')) {
 		$scripts .= script_tag(JS_PATH . 'bootstrap-datepicker.js') . "\r\n";
 		$scripts .= script_tag(JS_PATH . 'jquery-ui.min.js') . "\r\n";
 		$scripts .= script_tag(JS_PATH . 'custom.min.js') . "\r\n";
+		$scripts .= script_tag(JS_PATH . 'jquery-1.10.2.js') . "\r\n";
+		$scripts .= script_tag(JS_PATH . 'jquery-ui.js') . "\r\n";
 
 		return $scripts;
 	}
