@@ -54,7 +54,7 @@ if ($_SERVER['SERVER_NAME'] == 'local.spa.itservices.com') { // local
 	$db['default']['hostname'] = 'localhost';
 	$db['default']['username'] = 'root';
 	$db['default']['password'] = '';
-	$db['default']['database'] = 'itservices_ows';
+	$db['default']['database'] = 'itservices_spa';
 } else { // live
 	$db['default']['hostname'] = 'mysql9.000webhost.com';
 	$db['default']['username'] = 'a7226690_spa';

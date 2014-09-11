@@ -17,29 +17,26 @@ class Invoices extends HD_Controller {
 	public function index() {
 		// check in case invoice exist
 		$this->_data['invoice_items'] = $this->msales->check_purchase();
-		$this->_data['sub_total'] = $this->msales->get_total();
-		$this->_data['members'] = $this->mmembers->select();
+		//$this->_data['sub_total'] = $this->msales->get_total();
+		$this->_data['members'] = $this->mmembers->select_member(1);
 
-		$this->form_validation->set_rules('customer_phone', 'Customer Phone', 'required|trim|min_length[9]|numeric');
+		$this->form_validation->set_rules('customer_phone', 'Customer Phone', 'required|trim|min_length[9]');
 		$this->form_validation->set_rules('cash_receive', 'Cash Received', 'required|trim|numeric');
-		$this->form_validation->set_rules('cash_type', '', 'trim');
-		$this->form_validation->set_rules('discount', 'Discount', 'trim|numeric|max_length[3]');
-		$this->form_validation->set_rules('deposit', 'Deposit', 'trim|numeric');
-		$this->form_validation->set_select('cash_type');
 		if ($this->form_validation->run() == FALSE) {
 			$this->load->view('index', $this->_data);
 		} else {
 			$cash_receive = $this->input->post('cash_receive');
 			$cash_type = $this->input->post('cash_type');
-			$total = $this->_data['sub_total'];
+			//$total = $this->_data['sub_total'];
 
-			if ($cash_type == 'KH') {
-				$total = $total * USD_TO_KH;
-			}
-
+		
+			$phone = $this->input->post('customer_phone');
+			
+			if ($phone) {
+				
 			// Discount
-			if ($this->input->post('discount')) {
-				$discount = $this->input->post('discount');
+				$this->_data['dis'] = $this->mmembers->select_member_discount($phone);
+				$discount = $this->_data['dis']->discount;
 				$grant_total = $total * (1 - $discount / 100);
 			} else {
 				$discount = 0;
@@ -47,28 +44,12 @@ class Invoices extends HD_Controller {
 			}
 
 			// Deposit
-			if ($this->input->post('deposit')) {
-				$deposit = $this->input->post('deposit');
-				$balance = $grant_total - $deposit;
-				if ($this->input->post('deposit') < $cash_receive) {
-					$cash_exchange = $cash_receive - $deposit;
-				}
-			} else {
-				$deposit = 0;
-				$balance = 0;
-				if ($cash_receive > $grant_total) {
-					$cash_exchange = $cash_receive - $grant_total;
-				} else {
-					$cash_exchange = 0;
-				}
-			}
-
+			
 			$customer_phone = $this->input->post('customer_phone');
 			$data = array(
 				'customer_phone' => $customer_phone,
 				'total' => $total,
 				'cash_receive' => $cash_receive,
-				'cash_type' => $cash_type,
 				'discount' => $discount,
 				'grand_total' => $grant_total,
 				'deposit' => $deposit,
@@ -90,9 +71,6 @@ class Invoices extends HD_Controller {
 	public function print_invoice() {
 		if ($this->session->userdata('cur_invoice_id')) {
 			$result = $this->msales->check_purchase();
-			foreach ($result as $item) {
-				$this->msales->cut_stock($item->name, $item->qty);
-			}
 			$this->msales->print_invoice();
 			$this->session->unset_userdata('cur_invoice_id');
 			$this->session->set_flashdata('message', alert_message("New invoice has been printed and saved!", 'success'));
@@ -100,7 +78,7 @@ class Invoices extends HD_Controller {
 		} else {
 			$this->mdeposits->clear_deposit($this->uri->segment(3));
 			$this->session->set_flashdata('message', alert_message("New invoice has been printed and saved!", 'success'));
-			redirect('deposits/');
+			redirect('sales/');
 		}
 	}
 

@@ -4,23 +4,23 @@ if (!defined('BASEPATH'))
 	exit('No direct script access allowed');
 
 /**
- * Manipulation on products management
+ * Manipulation on services management
  *
  * @author manmath
  */
-class Products extends HD_Controller {
+class Services extends HD_Controller {
 
 	public function __construct() {
 		parent::__construct();
-		$this->_data['title'] = 'Categoires Management';
-		$this->load->model(array('mproducts', 'mcategories'));
+		$this->_data['title'] = 'Service Management';
+		$this->load->model(array('mservices', 'mcategories'));
 	}
 
 	/**
 	 * List all categoires
 	 */
 	public function index() {
-		$this->_data['products'] = $this->mproducts->select();
+		$this->_data['services'] = $this->mservices->select();
 		$this->load->view('index', $this->_data);
 	}
 
@@ -31,8 +31,8 @@ class Products extends HD_Controller {
 	 * @return void
 	 */
 	public function add() {
-		$this->form_validation->set_rules('name', 'name', 'required|trim|max_length[50]|min_length[2]|is_unique[ci_products.name]');
-		$this->form_validation->set_rules('service_price', 'service price', 'required|trim|max_length[50]|min_length[1]|numeric');
+		$this->form_validation->set_rules('name', 'name', 'required|trim|max_length[50]|min_length[2]|is_unique[ci_services.name]');
+		$this->form_validation->set_rules('price', 'Price', 'required|trim|max_length[50]|min_length[1]|numeric');
 		$this->form_validation->set_rules('description', '', 'trim');
 		$this->form_validation->set_rules('status', '', 'trim');
 		$this->form_validation->set_rules('cid', '', 'trim');
@@ -42,12 +42,12 @@ class Products extends HD_Controller {
 			$this->_data['categories'] = $this->mcategories->select(1);
 			$this->load->view('index', $this->_data);
 		} else {
-			if ($this->mproducts->add()) {
-				$this->session->set_flashdata('message', alert_message("Product has been saved!", 'success'));
-				redirect('products/');
+			if ($this->mservices->add()) {
+				$this->session->set_flashdata('message', alert_message("Service has been saved!", 'success'));
+				redirect('services/');
 			} else {
-				$this->session->set_flashdata('message', alert_message("Product cannot be saved, please try again!", 'danger'));
-				redirect('pproducts/add');
+				$this->session->set_flashdata('message', alert_message("Service cannot be saved, please try again!", 'danger'));
+				redirect('services/add');
 			}
 		}
 	}
@@ -55,15 +55,15 @@ class Products extends HD_Controller {
 	/**
 	 * Edit
 	 *
-	 * @param integer $id category id to edit
+	 * @param integer $id service id to edit
 	 * @access public
 	 * @return void
 	 */
 	public function edit($id) {
-		$this->_data['products'] = $this->mproducts->select_by_id($id);
+		$this->_data['services'] = $this->mservices->select_by_id($id);
 
-		$this->form_validation->set_rules('name', 'name', 'required|trim|max_length[50]|min_length[2]|callback_uniqueExcept[ci_products.name, pid]');
-		$this->form_validation->set_rules('service_price', 'service price', 'required|trim|max_length[50]|min_length[1]|numeric');
+		$this->form_validation->set_rules('name', 'name', 'required|trim|max_length[50]|min_length[2]|callback_uniqueExcept[ci_services.name, pid]');
+		$this->form_validation->set_rules('price', 'sprice', 'required|trim|max_length[50]|min_length[1]|numeric');
 		$this->form_validation->set_rules('description', '', 'trim');
 		$this->form_validation->set_rules('cid', '', 'trim');
 		$this->form_validation->set_rules('status', '', 'trim');
@@ -73,11 +73,11 @@ class Products extends HD_Controller {
 			$this->_data['categories'] = $this->mcategories->select(1);
 			$this->load->view('index', $this->_data);
 		} else {
-			if ($this->mproducts->edit()) {
-				$this->session->set_flashdata('message', alert_message("Category has been updated!", 'success'));
-				redirect('products/');
+			if ($this->mservices->edit()) {
+				$this->session->set_flashdata('message', alert_message("Service has been updated!", 'success'));
+				redirect('services/');
 			} else {
-				$this->session->set_flashdata('message', alert_message("Category cannot be updated, please try again!", 'danger'));
+				$this->session->set_flashdata('message', alert_message("Service cannot be updated, please try again!", 'danger'));
 				$this->load->view('index', $this->_data);
 			}
 		}
@@ -91,23 +91,23 @@ class Products extends HD_Controller {
 	 * @return void
 	 */
 	public function discard($id) {
-		if ($this->mproducts->discard_by_id($id)) {
-			$this->session->set_flashdata('message', alert_message("Product has been deleted!", 'success'));
-			redirect('products/');
+		if ($this->mservices->discard_by_id($id)) {
+			$this->session->set_flashdata('message', alert_message("Service has been deleted!", 'success'));
+			redirect('services/');
 		} else {
-			$this->session->set_flashdata('message', alert_message("Product cannot be deleted, please try again!", 'danger'));
-			redirect('products/');
+			$this->session->set_flashdata('message', alert_message("Service cannot be deleted, please try again!", 'danger'));
+			redirect('services/');
 		}
 	}
 
-	public function get_product_autocomplete() {
+	public function get_service_autocomplete() {
 		if (isset($_GET['term'])) {
 			$name = strtolower($_GET['term']);
-			$this->mproducts->get_product_autocomplete($name);
+			$this->mservices->get_service_autocomplete($name);
 		}
 	}
 
 }
 
-/* End of file products.php */
-/* Location: ./application/controllers/products.php */
+/* End of file services.php */
+/* Location: ./application/controllers/services.php */

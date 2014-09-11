@@ -6,8 +6,8 @@
 		<?php
 		echo stylesheets();
 		echo site_title($title);
-		echo javascripts();
 		?>
+		<script type="text/javascript" src="<?php echo base_url(); ?>resources/js/jquery.min.js"></script>
 	</head>
 	<body class="main">
 		<!-- navigation [BEGIN] -->

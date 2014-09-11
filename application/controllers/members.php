@@ -8,7 +8,7 @@ class Members extends HD_Controller {
 	public function __construct() {
 		parent::__construct();
 		$this->_data['title'] = 'Member Management';
-		$this->load->model(array('mmembers', 'mgroup', 'mroles'));
+		$this->load->model(array('mmembers', 'mgroups', 'mroles'));
 	}
 
 	/**
@@ -17,7 +17,7 @@ class Members extends HD_Controller {
 	public function index() {
 		$this->_data['active'] = 'member';
 		$this->_data['members'] = $this->mmembers->select();
-		$this->_data['groups'] = $this->mgroup->select_group();
+		$this->_data['groups'] = $this->mgroups->select_group();
 		$this->load->view('index', $this->_data);
 	}
 
@@ -37,14 +37,14 @@ class Members extends HD_Controller {
 				'rules' => 'trim|max_length[50]|alpha'
 			),
 			array(
-				'field' => 'card',
-				'label' => 'card',
-				'rules' => 'trim'
+				'field' => 'card_id',
+				'label' => 'card id',
+				'rules' => 'trim|is_unique[ci_members.card_id]'
 			),
 			array(
 				'field' => 'phone',
 				'label' => 'phone',
-				'rules' => 'trim|is_unique[ci_member.phone]'
+				'rules' => 'required|trim|is_unique[ci_members.phone]'
 			),
 			array(
 				'field' => 'gid',
@@ -64,17 +64,19 @@ class Members extends HD_Controller {
 		);
 		$this->form_validation->set_rules($config);
 		$this->form_validation->set_checkbox('status');
+		$this->form_validation->set_select('sex');
+		$this->form_validation->set_select('gid');
 		if ($this->form_validation->run() == FALSE) {
 			$this->_data['active'] = 'member';
-			$this->_data['group'] = $this->mgroup->select_group('',1);
+			$this->_data['group'] = $this->mgroups->select_group('', 1);
 			$this->load->view('index', $this->_data);
 		} else {
 			if ($this->mmembers->add()) {
-				$this->session->set_flashdata('message', alert_message("User account has been saved!", 'success'));
+				$this->session->set_flashdata('message', alert_message("Member account has been saved!", 'success'));
 				redirect('members/', 'refresh');
 			} else {
-				$this->session->set_flashdata('message', alert_message("User account cannot be added, please try again", 'danger'));
-				redirect('members/add');
+				$this->session->set_flashdata('message', alert_message("Member account cannot be added, please try again", 'danger'));
+				redirect('members/add_member');
 			}
 		}
 	}
@@ -83,7 +85,6 @@ class Members extends HD_Controller {
 	 * Edit member
 	 */
 	public function edit_member($id) {
-		
 		$this->_data['member'] = $this->mmembers->select_by_id($id);
 		$config = array(
 			array(
@@ -99,12 +100,12 @@ class Members extends HD_Controller {
 			array(
 				'field' => 'card_id',
 				'label' => 'card_id',
-				'rules' => 'trim'
+				'rules' => 'trim|callback_uniqueExcept[ci_members.card_id, mid]'
 			),
 			array(
-				'field' => 'phon',
-				'label' => 'phon',
-				'rules' => 'trim|is_unique[ci_member.phone]'
+				'field' => 'phone',
+				'label' => 'phone',
+				'rules' => 'trim|required|callback_uniqueExcept[ci_members.phone, mid]'
 			),
 			array(
 				'field' => 'gid',
@@ -124,30 +125,32 @@ class Members extends HD_Controller {
 		);
 		$this->form_validation->set_rules($config);
 		$this->form_validation->set_checkbox('status');
+		$this->form_validation->set_select('sex');
+		$this->form_validation->set_select('gid');
 		if ($this->form_validation->run() == FALSE) {
 			$this->_data['active'] = 'member';
-			$this->_data['group'] = $this->mgroup->select_group('', 1);
+			$this->_data['group'] = $this->mgroups->select_group('', 1);
 			$this->load->view('index', $this->_data);
 		} else {
 			if ($this->mmembers->edit()) {
-				$this->session->set_flashdata('message', alert_message("User account has been saved!", 'success'));
+				$this->session->set_flashdata('message', alert_message("Member account has been updated!", 'success'));
 				redirect('members/', 'refresh');
 			} else {
-				$this->session->set_flashdata('message', alert_message("User account cannot be added, please try again", 'danger'));
+				$this->session->set_flashdata('message', alert_message("Member account cannot be updated, please try again", 'danger'));
 				$this->load->view('index', $this->_data);
 			}
 		}
 	}
-	
+
 	/**
 	 * Delete member
 	 */
-	public function discard_member () {
+	public function discard_member() {
 		if ($this->mmembers->discard()) {
-			$this->session->set_flashdata('message', alert_message("User account has been deleted!", 'success'));
+			$this->session->set_flashdata('message', alert_message("Member account has been deleted!", 'success'));
 			redirect('members/', 'refresh');
 		} else {
-			$this->session->set_flashdata('message', alert_message("User account cannot been deleted,
+			$this->session->set_flashdata('message', alert_message("Member account cannot been deleted,
 			please try again", 'danger'));
 			redirect('members/', 'refresh');
 		}
@@ -161,7 +164,7 @@ class Members extends HD_Controller {
 			array(
 				'field' => 'name',
 				'label' => 'Name',
-				'rules' => 'trim|max_length[50]|alpha|is_unique[ci_group.name]'
+				'rules' => 'required|trim|max_length[50]|alpha|is_unique[ci_groups.name]'
 			),
 			array(
 				'field' => 'discount',
@@ -185,27 +188,26 @@ class Members extends HD_Controller {
 			$this->_data['active'] = 'group';
 			$this->load->view('index', $this->_data);
 		} else {
-			if ($this->mgroup->add()) {
-				$this->session->set_flashdata('message', alert_message("User role has been saved!", 'success'));
+			if ($this->mgroups->add()) {
+				$this->session->set_flashdata('message', alert_message("Member role has been saved!", 'success'));
 				redirect('members/', 'refresh');
 			} else {
-				$this->session->set_flashdata('message', alert_message("User role cannot be added, please try again",
-					'danger'));
+				$this->session->set_flashdata('message', alert_message("Member role cannot be added, please try again", 'danger'));
 				redirect('members/add_group');
 			}
 		}
 	}
+
 	/**
 	 * edit group
 	 */
-	 
-	 public function edit_group($id) {
-	 	$this->_data['group'] = $this->mgroup->select_by_id($id);
+	public function edit_group($id) {
+		$this->_data['group'] = $this->mgroups->select_by_id($id);
 		$config = array(
 			array(
 				'field' => 'name',
 				'label' => 'Name',
-				'rules' => 'trim'
+				'rules' => 'trim|required|callback_uniqueExcept[ci_groups.name, gid]'
 			),
 			array(
 				'field' => 'discount',
@@ -229,12 +231,11 @@ class Members extends HD_Controller {
 			$this->_data['active'] = 'group';
 			$this->load->view('index', $this->_data);
 		} else {
-			if ($this->mgroup->edit()) {
-				$this->session->set_flashdata('message', alert_message("User role has been saved!", 'success'));
+			if ($this->mgroups->edit()) {
+				$this->session->set_flashdata('message', alert_message("Group has been saved!", 'success'));
 				redirect('members/', 'refresh');
 			} else {
-				$this->session->set_flashdata('message', alert_message("User role cannot be added, please try again",
-					'danger'));
+				$this->session->set_flashdata('message', alert_message("Group cannot be added, please try again", 'danger'));
 				$this->load->view('index', $this->_data);
 			}
 		}
@@ -243,13 +244,12 @@ class Members extends HD_Controller {
 	/**
 	 * Delete group
 	 */
-	public function discard_group () {
-		if ($this->mgroup->discard()) {
-			$this->session->set_flashdata('message', alert_message("User role has been deleted!", 'success'));
+	public function discard_group() {
+		if ($this->mgroups->discard()) {
+			$this->session->set_flashdata('message', alert_message("Member role has been deleted!", 'success'));
 			redirect('members/', 'refresh');
 		} else {
-			$this->session->set_flashdata('message', alert_message("User role cannot been deleted, please try again",
-				'danger'));
+			$this->session->set_flashdata('message', alert_message("Member role cannot been deleted, please try again", 'danger'));
 			redirect('members/', 'refresh');
 		}
 	}

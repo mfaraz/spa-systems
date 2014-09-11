@@ -180,13 +180,10 @@ if (!function_exists('javascripts')) {
 	function javascripts() {
 		$scripts = '';
 
-		$scripts .= script_tag(JS_PATH . 'jquery.js') . "\r\n";
+		$scripts .= script_tag(JS_PATH . 'jquery-ui.min.js') . "\r\n";
 		$scripts .= script_tag(JS_PATH . 'bootstrap.min.js') . "\r\n";
 		$scripts .= script_tag(JS_PATH . 'bootstrap-datepicker.js') . "\r\n";
-		$scripts .= script_tag(JS_PATH . 'jquery-ui.min.js') . "\r\n";
 		$scripts .= script_tag(JS_PATH . 'custom.min.js') . "\r\n";
-		$scripts .= script_tag(JS_PATH . 'jquery-1.10.2.js') . "\r\n";
-		$scripts .= script_tag(JS_PATH . 'jquery-ui.js') . "\r\n";
 
 		return $scripts;
 	}

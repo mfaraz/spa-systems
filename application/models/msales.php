@@ -5,8 +5,8 @@ if (!defined('BASEPATH'))
 
 /**
  * Execution SQL statement on table ci_categoires
- *
  * @author manmath
+ *
  */
 class Msales extends CI_Model {
 
@@ -110,7 +110,7 @@ class Msales extends CI_Model {
 		$this->_data = array(
 			'iid' => $this->session->userdata('cur_invoice_id'),
 			'cid' => $this->input->post('cid'),
-			'name' => $this->input->post('name')
+			'name' => $this->input->post('name'),
 		);
 		$this->db->insert('ci_invoice_details', $this->_data);
 	}
@@ -130,11 +130,10 @@ class Msales extends CI_Model {
 			$this->db->where('i.iid', 0);
 		}
 		$this->db->select(array('d.idid', 'i.invoice_number', 'i.customer_phone', 'i.total',
-				'i.cash_receive', 'i.cash_type', 'i.discount', 'i.grand_total', 'i.deposit', 'i.balance',
-				'i.cash_exchange', 'i.crdate', 'i.modate', 'i.grand_total', 'd.cid', 'd.name', 'd.qty',
-				'd.unit_price', 'd.sub_total'))
+				'i.cash_receive', 'i.grand_total', 'i.cash_exchange', 'i.crdate', 'i.modate', 'i.grand_total', 'd.cid', 'd.name', 's.price'))
 			->from('ci_invoices i')
-			->join('ci_invoice_details d', 'd.iid = i.iid');
+			->join('ci_invoice_details d', 'd.iid = i.iid')
+			->join('ci_services s', 's.name = d.name');
 		$result = $this->db->get();
 		if ($result->num_rows() > 0) {
 			return $result->result();

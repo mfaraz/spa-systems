@@ -17,18 +17,6 @@
 		<?php endif; ?>
 	</div>
 	<div class="col-md-4">
-		
+
 	</div>
 </div>
-<script>
-	$(function() {
-		var availableTags = [
-			"Spa",
-			"Stim",
-			"Sona"
-		];
-		$( "#name" ).autocomplete({
-			source: availableTags
-		});
-	});
-</script>

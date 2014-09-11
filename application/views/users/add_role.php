@@ -24,8 +24,8 @@
 						<?php echo form_label('Description', 'description', array('class' => 'col-sm-3
 						control-label')); ?>
 						<div class="col-sm-9">
-							<?php echo form_textarea('description', set_value('description'),
-								'class="form-control input-sm" pattern=".{1,250}" title="Allow enter from 1 to 250 character(s)"'); ?>
+							<?php echo form_textarea('description', set_value('description'), 'class="form-control input-sm" pattern=".{1,250}" title="Allow enter from 1 to 250 character(s)"');
+							?>
 						</div>
 					</div>
 					<div class="form-group">

@@ -4,21 +4,21 @@ if (!defined('BASEPATH'))
 	exit('No direct script access allowed');
 
 /**
- * Execution SQL statement on table ci_categoires
+ * Execution SQL statement on table ci_services
  *
  * @author manmath
  */
-class Mproducts extends CI_Model {
+class Mservices extends CI_Model {
 
 	private $_data = array();
 
 	/**
-	 * Retreive all products
+	 * Retreive all services
 	 *
 	 * @return boolean/array_object
 	 */
 	public function select() {
-		$result = $this->db->get('ci_products');
+		$result = $this->db->get('ci_services');
 
 		if ($result->num_rows() > 0) {
 			return $result->result();
@@ -27,14 +27,31 @@ class Mproducts extends CI_Model {
 	}
 
 	public function select_by_id($id) {
-		$result = $this->db->select(array('pid', 'p.cid', 'p.name', 'p.service_price', 'p.description', 'p.status'))
-			->from('ci_products p')
+		$result = $this->db->select(array('pid', 'p.cid', 'p.name', 'p.price', 'p.description', 'p.status'))
+			->from('ci_services p')
 			->join('ci_categories c', 'c.cid = p.cid')
 			->where('pid', $id)
 			->limit(1)
 			->get();
 		if ($result->num_rows() > 0) {
 			return $result->row();
+		}
+		return FALSE;
+	}
+
+	public function select_price($cid, $name) {
+		$this->db->select(array('*'))
+			->from('ci_services');
+		if ($cid !== '') {
+			$this->db->where('cid', $cid);
+		}
+		if ($name !== '') {
+			$this->db->where('name', $name);
+		}
+		$this->db->limit(1);
+		$result = $this->db->get();
+		if ($result->num_rows() > 0) {
+			return $result->result();
 		}
 		return FALSE;
 	}
@@ -49,7 +66,7 @@ class Mproducts extends CI_Model {
 		$this->db->set('cruser', $this->session->userdata('ci_id'));
 		$this->db->set('crdate', time(), FALSE);
 		$this->_data = $this->input->post();
-		return $this->db->insert('ci_products', $this->_data) ? TRUE : FALSE;
+		return $this->db->insert('ci_services', $this->_data) ? TRUE : FALSE;
 	}
 
 	/**
@@ -66,7 +83,7 @@ class Mproducts extends CI_Model {
 			$this->db->set('status', 0);
 		}
 		$this->db->where('pid', $this->uri->segment(3));
-		return $this->db->update('ci_products', $this->_data) ? TRUE : FALSE;
+		return $this->db->update('ci_services', $this->_data) ? TRUE : FALSE;
 	}
 
 	/**
@@ -78,7 +95,7 @@ class Mproducts extends CI_Model {
 	 */
 	public function discard_by_id($id) {
 		$this->db->where('pid', $id);
-		return $this->db->delete('ci_products') ? TRUE : FALSE;
+		return $this->db->delete('ci_services') ? TRUE : FALSE;
 	}
 
 	/**
@@ -88,12 +105,11 @@ class Mproducts extends CI_Model {
 	 * @access public
 	 * @return void
 	 */
-	public function get_product_autocomplete($name) {
+	public function get_service_autocomplete($name) {
 		$result = $this->db->select('name')
 			->like('name', $name)
 			->where('status', 1)
-			->where('unit_in_stocks > ', 0)
-			->get('ci_products');
+			->get('ci_services');
 		if ($result->num_rows() > 0) {
 			foreach ($result->result_array() as $row) {
 				$result_set[] = htmlentities(stripslashes($row['name'])); // build an array

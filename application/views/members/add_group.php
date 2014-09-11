@@ -11,7 +11,7 @@
 		<div class="col-md-6">
 			<div class="panel panel-default">
 				<div class="panel-heading">
-					<h4 class="panel-title">Member Group</h4>
+					<h4 class="panel-title">Group Member</h4>
 				</div>
 				<div class="panel-body">
 					<div class="form-group <?php echo form_is_error('name'); ?>">
@@ -21,17 +21,17 @@
 						</div>
 					</div>
 					<div class="form-group <?php echo form_is_error('discount'); ?>">
-						<?php echo form_label('Discount <span class="required">*</span>', 'discount', array('class' => 'col-sm-3 control-label')); ?>
+						<?php echo form_label('Discount', 'discount', array('class' => 'col-sm-3 control-label')); ?>
 						<div class="col-sm-9">
-							<?php echo form_input('discount', set_value('discount'), 'class="form-control input-sm" pattern=".{1,3}" title="Allow enter from 1 to 3 characters" required') . form_error('discount'); ?>
+							<?php echo form_input('discount', set_value('discount'), 'class="form-control input-sm" pattern=".{1,3}" title="Allow enter from 1 to 3 characters"') . form_error('discount'); ?>
 						</div>
 					</div>
 					<div class="form-group">
 						<?php echo form_label('Description', 'description', array('class' => 'col-sm-3
 						control-label')); ?>
 						<div class="col-sm-9">
-							<?php echo form_textarea('description', set_value('description'),
-								'class="form-control input-sm" pattern=".{1,250}" title="Allow enter from 1 to 250 character(s)"'); ?>
+							<?php echo form_textarea('description', set_value('description'), 'class="form-control input-sm" pattern=".{1,250}" title="Allow enter from 1 to 250 character(s)"');
+							?>
 						</div>
 					</div>
 					<div class="form-group">
@@ -45,7 +45,7 @@
 			</div>
 		</div>
 		<div class="col-md-6">
-			
+
 		</div>
 	</div>
 	<?php

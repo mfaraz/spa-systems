@@ -1,13 +1,13 @@
 <div class="panel-heading">
-	<h3 class="panel-title">Member Management</h3>
+	<h3 class="panel-title"><?php echo $title; ?></h3>
 </div>
 <div class="panel-body">
 	<ul class="nav nav-tabs" role="tablist">
 		<li class="<?php echo ($active == 'member') ? 'active' : ''; ?>">
-			<a href="#members" role="tab" data-toggle="tab">List of Member</a>
+			<a href="#members" role="tab" data-toggle="tab">Members</a>
 		</li>
 		<li class="<?php echo ($active == 'group') ? 'active' : ''; ?>">
-			<a href="#groups" role="tab" data-toggle="tab">Member Group</a>
+			<a href="#groups" role="tab" data-toggle="tab">Groups</a>
 		</li>
 	</ul>
 	<?php
@@ -22,7 +22,7 @@
 					?>
 				</div>
 				<div class="content">
-					<div class="filter">
+					<div class="filter hidden">
 						<?php
 						echo form_open('members/', 'class="form-inline"');
 						?>
@@ -68,8 +68,7 @@
 								<td><?php echo ($member->status == 1) ? '<span class="glyphicon glyphicon-ok-sign color-green"></span>' : '<span class="glyphicon glyphicon-minus-sign color-red"></span>'; ?></td>
 								<td>
 									<?php
-										echo anchor('members/edit_member/' . $member->mid, '<span class="glyphicon glyphicon-edit"></span>', 'class="btn btn-warning btn-xs" title="Edit"') . '&nbsp;' . anchor('members/discard_member/' . $member->mid, '<span class="glyphicon glyphicon-trash"></span>', 'class="btn btn-danger btn-xs" title="Delete" onclick="return confirm(\'Are you sure you want to delete?\')"');
-									
+									echo anchor('members/edit_member/' . $member->mid, '<span class="glyphicon glyphicon-edit"></span>', 'class="btn btn-warning btn-xs" title="Edit"') . '&nbsp;' . anchor('members/discard_member/' . $member->mid, '<span class="glyphicon glyphicon-trash"></span>', 'class="btn btn-danger btn-xs" title="Delete" onclick="return confirm(\'Are you sure you want to delete?\')"');
 									?>
 								</td>
 								</tr>
@@ -121,8 +120,7 @@
 										<td><?php echo ($group->status == 1) ? $yes : $no; ?></td>
 										<td>
 											<?php
-												echo anchor('members/edit_group/' . $group->gid, '<span class="glyphicon glyphicon-edit"></span>', 'class="btn btn-warning btn-xs" title="Edit"') . '&nbsp;' . anchor('members/discard_group/' . $group->gid, '<span class="glyphicon glyphicon-trash"></span>', 'class="btn btn-danger btn-xs" title="Delete" onclick="return confirm(\'Are you sure you want to delete this role?\')"');
-											
+											echo anchor('members/edit_group/' . $group->gid, '<span class="glyphicon glyphicon-edit"></span>', 'class="btn btn-warning btn-xs" title="Edit"') . '&nbsp;' . anchor('members/discard_group/' . $group->gid, '<span class="glyphicon glyphicon-trash"></span>', 'class="btn btn-danger btn-xs" title="Delete" onclick="return confirm(\'Are you sure you want to delete this role?\')"');
 											?>
 										</td>
 									</tr>

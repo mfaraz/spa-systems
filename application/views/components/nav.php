@@ -21,9 +21,9 @@
 				endif;
 				if ($this->session->userdata('mul_products')):
 					?>
-					<li class="<?php echo $this->uri->segment(1) == 'products' ? 'active' : '' ?>">
+					<li class="<?php echo $this->uri->segment(1) == 'services' ? 'active' : '' ?>">
 						<?php
-						echo anchor('products/', '<i class="fa fa-database fa-3x"></i>Products', 'title="Products"');
+						echo anchor('services/', '<i class="fa fa-paw fa-3x"></i>Services', 'title="Services"');
 						?>
 					</li>
 					<?php
@@ -59,7 +59,7 @@
 					?>
 					<li class="<?php echo $this->uri->segment(1) == 'users' ? 'active' : '' ?>">
 						<?php
-						echo anchor('users/', '<i class="fa fa-users fa-3x"></i>Users', 'title="Users"');
+						echo anchor('users/', '<i class="fa fa-user fa-3x"></i>Users', 'title="Users"');
 						?>
 					</li>
 					<?php

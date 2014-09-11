@@ -8,10 +8,10 @@ if (!defined('BASEPATH'))
  *
  * @author manmath
  */
-class Mgroup extends CI_Model {
+class Mgroups extends CI_Model {
 
 	/**
-	 * Retrieve record in table ci_group
+	 * Retrieve record in table ci_groups
 	 *
 	 * @param integer $id
 	 * @param integer $status
@@ -28,20 +28,20 @@ class Mgroup extends CI_Model {
 			$this->db->where('status', $status);
 		}
 
-		$result = $this->db->get('ci_group');
+		$result = $this->db->get('ci_groups');
 		if ($result->num_rows() > 0) {
 			return $result->result();
 		}
 		return FALSE;
 	}
-	
+
 	public function select_by_id($id) {
 		$this->db->select('*');
 
 		if ($id !== '') {
 			$this->db->where('gid', $id);
 		}
-		$result = $this->db->get('ci_group');
+		$result = $this->db->get('ci_groups');
 		if ($result->num_rows() > 0) {
 			return $result->row();
 		}
@@ -53,12 +53,12 @@ class Mgroup extends CI_Model {
 	 *
 	 * @return bool
 	 */
-	public function add () {
+	public function add() {
 		$this->db->set('crdate', time(), FALSE);
 		$this->_data = $this->input->post();
-		return $this->db->insert('ci_group', $this->_data) ? TRUE : FALSE;
+		return $this->db->insert('ci_groups', $this->_data) ? TRUE : FALSE;
 	}
-	
+
 	/**
 	 * Edit
 	 *
@@ -72,18 +72,19 @@ class Mgroup extends CI_Model {
 			$this->db->set('status', 0);
 		}
 		$this->db->where('gid', $this->uri->segment(3));
-		return $this->db->update('ci_group', $this->_data) ? TRUE : FALSE;
+		return $this->db->update('ci_groups', $this->_data) ? TRUE : FALSE;
 	}
-	
+
 	/**
 	 * Delete group
 	 *
 	 * @return bool
 	 */
-	public function discard () {
+	public function discard() {
 		$this->db->where('gid', $this->uri->segment(3));
-		return $this->db->delete('ci_group') ? TRUE : FALSE;
+		return $this->db->delete('ci_groups') ? TRUE : FALSE;
 	}
+
 }
 
 /* End of file musers.php */

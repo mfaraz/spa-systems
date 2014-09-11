@@ -79,11 +79,16 @@
 </div>
 <script>
 	$(function() {
-		var availableTags = [
-					"011 74 82 00",
-					"069 516 303",
-					"096 66 55 96"
-		];
+		<?php
+			
+			$js ="var availableTags = [";
+			foreach($members as $rows){
+				$js.="'".$rows->phone."',";
+			}
+			$js.="];";
+			
+			print $js;
+		?>
 		$( "#customer_phone" ).autocomplete({
 			source: availableTags
 		});

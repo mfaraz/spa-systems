@@ -20,13 +20,13 @@ class Mmembers extends CI_Model {
 	 */
 	public function select($id = '') {
 		$this->db->select(array('m.*', 'g.name'))
-				->from('ci_member m')
-				->join('ci_group g', 'g.gid = m.gid')
-				->order_by('m.firstname');
+			->from('ci_members m')
+			->join('ci_groups g', 'g.gid = m.gid')
+			->order_by('m.firstname');
 
 		if ($id !== '') {
 			$this->db->where('mid', $id)
-					->limit(1);
+				->limit(1);
 		}
 
 		$result = $this->db->get();
@@ -36,12 +36,34 @@ class Mmembers extends CI_Model {
 		}
 		return FALSE;
 	}
-	
+
 	public function select_by_id($id) {
-		$result = $this->db->select(array('mid', 'm.gid', 'm.card_id', 'm.firstname', 'm.lastname', 'm.sex', 'm.phone', 'm.status'))
-			->from('ci_member m')
-			->join('ci_group g', 'g.gid = m.gid')
-			->where('mid', $id)
+		$result = $this->db->where('mid', $id)
+			->limit(1)
+			->get('ci_members');
+		if ($result->num_rows() > 0) {
+			return $result->row();
+		}
+		return FALSE;
+	}
+
+	public function select_member($status = '') {
+		if ($status) {
+			$this->db->where('status', $status);
+		}
+		$result = $this->db->get('ci_members');
+
+		if ($result->num_rows() > 0) {
+			return $result->result();
+		}
+		return FALSE;
+	}
+
+	public function select_member_discount($phone) {
+		$result = $this->db->select(array('mid', 'm.gid', 'm.card_id', 'm.firstname', 'm.lastname', 'm.sex', 'm.phone', 'm.status', 'g.discount'))
+			->from('ci_members m')
+			->join('ci_groups g', 'g.gid = m.gid')
+			->where('m.phone', $phone)
 			->limit(1)
 			->get();
 		if ($result->num_rows() > 0) {
@@ -51,26 +73,18 @@ class Mmembers extends CI_Model {
 	}
 
 	/**
-	
-	/**
+
+	  /**
 	 * Create user
 	 *
 	 * @return boolean
 	 */
 	public function add() {
-		$this->_data = array(
-			'gid' => $this->input->post('gid'),
-			'firstname' => $this->input->post('firstname'),
-			'lastname' => $this->input->post('lastname'),
-			'card_id' => $this->input->post('card'),
-			'sex' => $this->input->post('sex'),
-			'phone' => $this->input->post('phone'),
-			'status' => $this->input->post('status'),
-			'crdate' => time()
-		);
-		return $this->db->insert('ci_member', $this->_data);
+		$this->db->set('crdate', time(), FALSE);
+		$this->_data = $this->input->post();
+		return $this->db->insert('ci_members', $this->_data) ? TRUE : FALSE;
 	}
-	
+
 	/**
 	 * Edit
 	 *
@@ -84,7 +98,7 @@ class Mmembers extends CI_Model {
 			$this->db->set('status', 0);
 		}
 		$this->db->where('mid', $this->uri->segment(3));
-		return $this->db->update('ci_member', $this->_data) ? TRUE : FALSE;
+		return $this->db->update('ci_members', $this->_data) ? TRUE : FALSE;
 	}
 
 	/**
@@ -92,10 +106,11 @@ class Mmembers extends CI_Model {
 	 *
 	 * @return bool
 	 */
-	public function discard () {
+	public function discard() {
 		$this->db->where('mid', $this->uri->segment(3));
-		return $this->db->delete('ci_member') ? TRUE : FALSE;
+		return $this->db->delete('ci_members') ? TRUE : FALSE;
 	}
+
 }
 
 /* End of file musers.php */
