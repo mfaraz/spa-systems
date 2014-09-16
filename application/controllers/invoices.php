@@ -8,7 +8,7 @@ class Invoices extends HD_Controller {
 	public function __construct() {
 		parent::__construct();
 		$this->_data['title'] = 'Invoice Management';
-		$this->load->model(array('msales', 'mdeposits', 'mmembers'));
+		$this->load->model(array('msales', 'mmembers'));
 	}
 
 	/**
@@ -20,22 +20,30 @@ class Invoices extends HD_Controller {
 		$this->_data['sub_total'] = $this->msales->get_total();
 		$this->_data['members'] = $this->mmembers->select_member(1);
 
-		$this->form_validation->set_rules('customer_phone', 'Customer Phone', 'min_length[9]');
+		$this->form_validation->set_rules('identity_id', '', 'trim');
+		$this->form_validation->set_rules('identity_type', '', 'trim');
 		$this->form_validation->set_rules('cash_receive', 'Cash Received', 'required|numeric');
+		$this->form_validation->set_select('identity_type');
 		if ($this->form_validation->run() == FALSE) {
 			$this->load->view('index', $this->_data);
 		} else {
 			$cash_receive = $this->input->post('cash_receive');
-			$cash_type = $this->input->post('cash_type');
+			$identity_type = $this->input->post('identity_type');
 			$total = $this->_data['sub_total'];
 
-		
-			$phone = $this->input->post('customer_phone');
-			
-			if ($phone) {	
+			if ($identity_type == 1) {
+				$card_id = $identity_type;
+				$phone = '';
+				$result = $this->mmembers->select_member_discount($card_id);
+			} else {
+				$card_id = '';
+				$phone = $identity_type;
+				$result = $this->mmembers->select_member_discount($phone, 'phone');
+			}
+
 			// Discount
-				$this->_data['dis'] = $this->mmembers->select_member_discount($phone);
-				$discount = $this->_data['dis']->discount;
+			if ($result) {
+				$discount = $result->discount;
 				$grant_total = $total * (1 - $discount / 100);
 			} else {
 				$discount = 0;
@@ -48,12 +56,13 @@ class Invoices extends HD_Controller {
 			} else {
 				$cash_exchange = 0;
 			}
-			
-			$customer_phone = $this->input->post('customer_phone');
+
 			$data = array(
-				'customer_phone' => $customer_phone,
+				'card_id' => $card_id,
+				'customer_phone' => $phone,
 				'total' => $total,
 				'cash_receive' => $cash_receive,
+				'discount' => $discount,
 				'grand_total' => $grant_total,
 				'cash_exchange' => $cash_exchange
 			);
@@ -67,67 +76,13 @@ class Invoices extends HD_Controller {
 	}
 
 	/**
-	 * Cut stock after printing invoice
+	 * Printing invoice
 	 */
 	public function print_invoice() {
-		if ($this->session->userdata('cur_invoice_id')) {
-			$result = $this->msales->check_purchase();
-			$this->msales->print_invoice();
-			$this->session->unset_userdata('cur_invoice_id');
-			$this->session->set_flashdata('message', alert_message("New invoice has been printed and saved!", 'success'));
-			redirect('sales/');
-		} else {
-			$this->mdeposits->clear_deposit($this->uri->segment(3));
-			$this->session->set_flashdata('message', alert_message("New invoice has been printed and saved!", 'success'));
-			redirect('sales/');
-		}
-	}
-
-	/**
-	 * Complete payment from deposit
-	 */
-	public function complete_payment() {
-		$invoice_no = $this->uri->segment(3);
-		$this->_data['invoice_no'] = $invoice_no;
-
-		$this->form_validation->set_rules('cash_receive', 'Cash Received', 'required|trim|numeric');
-		$this->form_validation->set_rules('cash_type', '', 'trim');
-		$this->form_validation->set_select('cash_type');
-		if ($this->form_validation->run() == FALSE) {
-			$this->msales->clear_invoice_history($invoice_no);
-		} else {
-			$cash_receive = $this->input->post('cash_receive');
-			$cash_type = $this->input->post('cash_type');
-			$balance = $this->input->post('balance');
-			$prev_cash_type = $this->input->post('prev_cash_type');
-
-			if ($cash_type != $prev_cash_type) {
-				switch ($cash_type) {
-					case 'US':
-						$cash_receive = $cash_receive * USD_TO_KH;
-						break;
-					default:
-						$balance = $balance * USD_TO_KH;
-						break;
-				}
-			}
-
-			if ($cash_receive == $balance) {
-				$cash_exchange = 0.00;
-			} else {
-				$cash_exchange = $cash_receive - $balance;
-			}
-
-			$data = array(
-				'cash_receive' => $cash_receive,
-				'cash_type' => $cash_type,
-				'cash_exchange' => $cash_exchange,
-				'modate' => time()
-			);
-			$this->msales->new_invoice_hostory($invoice_no, $data);
-		}
-		$this->_data['invoice_items'] = $this->msales->check_purchase($invoice_no);
-		$this->load->view('index', $this->_data);
+		$this->msales->print_invoice();
+		$this->session->unset_userdata('cur_invoice_id');
+		$this->session->set_flashdata('message', alert_message("New invoice has been printed and saved!", 'success'));
+		redirect('sales/');
 	}
 
 }

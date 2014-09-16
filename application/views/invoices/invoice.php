@@ -6,19 +6,12 @@
 			$cashier = $this->session->userdata('ci_firstname');
 			$invoice_date = mdate('%d-%m-%Y %H:%i', $item->crdate);
 			$invoice_number = $item->invoice_number;
-			//$discount = $item->discount !== '0' ? $item->discount . '%' : '0';
+			$discount = $item->discount !== '0' ? $item->discount . '%' : '0';
 			$total = $item->total !== '0.00' ? '$' . $item->total : '0.00';
 			$grand_total = $item->grand_total !== '0.00' ? '$' . $item->grand_total : '0.00';
 			$cash_receive = $item->cash_receive !== '0.00' ? '$' . $item->cash_receive : '0.00';
 			$cash_exchange = $item->cash_exchange !== '0.00' ? '$' . $item->cash_exchange : '0.00';
 			break;
-		}
-		if($customer_phone != 0){
-			$this->load->model('mmembers');
-			$dis = $this->mmembers->select_member_discount($customer_phone);
-			$discount = $dis->discount !== '0' ? $dis->discount . '%' : '0';
-		}else{
-			$discount = '0';
 		}
 		$i = 1;
 		?>
@@ -60,7 +53,7 @@
 					</tr>
 				<?php } ?>
 				<tr>
-					<td colspan="1">&nbsp;</td>
+					<td>&nbsp;</td>
 					<td class="align-left">
 						<?php
 						if ($cash_receive == '0.00') {
@@ -83,7 +76,7 @@
 						}
 						?>
 					</td>
-					<td class="align-right">
+					<td>
 						<?php
 						if ($cash_receive == '0.00') {
 							echo '$' . $sub_total;

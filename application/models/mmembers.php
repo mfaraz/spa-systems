@@ -59,11 +59,15 @@ class Mmembers extends CI_Model {
 		return FALSE;
 	}
 
-	public function select_member_discount($phone) {
-		$result = $this->db->select(array('mid', 'm.gid', 'm.card_id', 'm.firstname', 'm.lastname', 'm.sex', 'm.phone', 'm.status', 'g.discount'))
+	public function select_member_discount($identity, $type = 'card') {
+		if ($type == 'card') {
+			$this->db->where('m.card_id', $identity);
+		} else {
+			$this->db->where('m.phone', $identity);
+		}
+		$result = $this->db->select('g.discount')
 			->from('ci_members m')
 			->join('ci_groups g', 'g.gid = m.gid')
-			->where('m.phone', $phone)
 			->limit(1)
 			->get();
 		if ($result->num_rows() > 0) {

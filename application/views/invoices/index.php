@@ -19,28 +19,30 @@
 						</h3>
 					</div>
 					<div class="panel-body">
-						<div class="form-group <?php echo form_is_error('card_id'); ?>">
-							<label for="cid" class="control-label col-sm-3">Select Type:</label>
+						<div class="form-group <?php echo form_is_error('identity_type'); ?>">
+							<label for="identity_type" class="control-label col-sm-3">Select Type:</label>
 							<div class="col-md-9">
-								<select class="form-control select-sm" id="selectType" data-placeholder="Choose">
-									<option value="0" default selected="">Choose</option>
-									<option value="1">Card ID</option>
-									<option value="2" class="next">Customer Phone</option>
-								</select>
+								<?php
+								$options = array(
+									'1' => 'Card ID',
+									'2' => 'Customer Phone'
+								);
+								echo form_dropdown('identity_type', $options, set_value('identity_type'), 'class="form-control input-sm" id="identity_type"')
+								?>
 							</div>
 						</div>
-						<div class="form-group <?php echo form_is_error('card_id'); ?>">
-							<label id="lCardId" for="cash_receive" class="control-label col-sm-3">Card ID</label>
+						<div class="form-group card <?php echo form_is_error('identity_id'); ?>">
+							<label for="identity_id" class="control-label col-sm-3">Card ID</label>
 							<div class="col-md-9">
-								<input type="text" name="card_id" id="card_id" class="form-control input-sm" value="<?php echo set_value('card_id'); ?>" />
-								<?php echo form_error('card_id'); ?>
+								<input type="text" name="identity_id" id="identity_id" class="form-control input-sm" value="<?php echo set_value('identity_id'); ?>" />
+								<?php echo form_error('identity_id'); ?>
 							</div>
 						</div>
-						<div class="form-group <?php echo form_is_error('customer_phone'); ?>">
-							<label id="lCusPhone" for="customer_phone" class="control-label col-sm-3">Customer Phone </label>
+						<div class="form-group phone <?php echo form_is_error('identity_id'); ?>">
+							<label for="identity_id" class="control-label col-sm-3">Customer Phone </label>
 							<div class="col-md-9">
-								<input type="text" name="customer_phone" id="customer_phone" class="form-control input-sm" value="<?php echo set_value('customer_phone'); ?>" pattern=".{9,30}" title="Allow enter between 9 to 30 characters" />
-								<?php echo form_error('customer_phone'); ?>
+								<input type="text" name="identity_id" id="identity_id" class="form-control input-sm" value="<?php echo set_value('identity_id'); ?>" pattern=".{9,30}" title="Allow enter between 9 to 30 characters" />
+								<?php echo form_error('identity_id'); ?>
 							</div>
 						</div>
 						<div class="form-group <?php echo form_is_error('cash_receive'); ?>">
@@ -86,44 +88,35 @@
 </div>
 <script>
 	$(function() {
-		<?php
-			
-			$js ="var availableTags = [";
-			foreach($members as $rows){
-				$js.="'".$rows->phone."',";
-			}
-			$js.="];";
-			
-			print $js;
-		?>
-		$( "#customer_phone" ).autocomplete({
+<?php
+$js = "var availableTags = [";
+foreach ($members as $rows) {
+	$js.="'" . $rows->phone . "',";
+}
+$js.="];";
+
+print $js;
+?>
+		$("#customer_phone").autocomplete({
 			source: availableTags
 		});
-	});
-	
-	$(document).ready(function() {
-		$('#lCardId').hide();
-		$('#card_id').hide();
-		$('#lCusPhone').show();
-		$('#customer_phone').show();
-		$("#selectType").change(function() {
-		   if($(this).val() == 0) {
-				$('#lCardId').hide();
-				$('#card_id').hide();
-				$('#lCusPhone').hide();
-				$('#customer_phone').hide();
-		   }
-		   else if($(this).val() == 1) {
-				$('#lCardId').show();
-				$('#card_id').show();
-				$('#lCusPhone').hide();
-				$('#customer_phone').hide();
-		   }else{
-				$('#lCardId').hide();
-				$('#card_id').hide();
-				$('#lCusPhone').show();
-				$('#customer_phone').show();
-		   }
+		console.log($('#identity_type').val());
+		if ($('#identity_type').val() == 1) {
+			$('.card').show();
+			$('.phone').hide();
+		} else {
+			$('.card').hide();
+			$('.phone').show();
+		}
+
+		$("#identity_type").change(function() {
+			if ($(this).val() == 1) {
+				$('.card').show();
+				$('.phone').hide();
+			} else {
+				$('.card').hide();
+				$('.phone').show();
+			}
 		});
 	});
 </script>

@@ -129,12 +129,12 @@ class Msales extends CI_Model {
 			$this->db->where('i.iid', 0);
 		}
 		$this->db->select(array('d.idid', 'i.invoice_number', 'i.customer_phone', 'i.total',
-				'i.cash_receive', 'i.grand_total', 'i.cash_exchange', 'i.crdate', 'i.modate', 'i.grand_total', 'd.name', 's.price'))
+				'i.cash_receive', 'i.discount', 'i.grand_total', 'i.cash_exchange', 'i.crdate', 'i.modate', 'i.grand_total', 'd.name', 's.price'))
 			->from('ci_invoices i')
 			->join('ci_invoice_details d', 'd.iid = i.iid')
 			->join('ci_services s', 's.name = d.name');
 		$result = $this->db->get();
-		
+
 		if ($result->num_rows() > 0) {
 			return $result->result();
 		}
@@ -172,32 +172,6 @@ class Msales extends CI_Model {
 		$this->db->set('status', 1)
 			->where('iid', $this->session->userdata('cur_invoice_id'))
 			->update('ci_invoices');
-	}
-
-	/**
-	 * Auto cut stock
-	 *
-	 * @param string $name
-	 * @param integer $qty
-	 */
-	public function cut_stock($name, $qty) {
-		$result = $this->db->select(array('unit_in_stocks', 'unit_in_sales'))
-			->where('name', $name)
-			->where('unit_in_stocks > ', 0)
-			->get('ci_products');
-
-		if ($result->num_rows() > 0) {
-			foreach ($result->result() as $arr) {
-				$new_unit_in_stocks = $arr->unit_in_stocks - $qty;
-				$new_unit_in_sales = $arr->unit_in_sales + $qty;
-
-				$this->db->set('unit_in_stocks', $new_unit_in_stocks)
-					->set('unit_in_sales', $new_unit_in_sales)
-					->where('name', $name)
-					->update('ci_products');
-				return TRUE;
-			}
-		}
 	}
 
 	/**

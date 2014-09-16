@@ -16,9 +16,9 @@ class Mreports extends CI_Model {
 	 * MIS report
 	 */
 	public function mis_report() {
-		$this->db->select(array('i.iid', 'i.invoice_number', 'i.crdate AS invoice_date',
+		$this->db->select(array('i.iid', 'i.invoice_number', 'i.crdate AS invoice_date', 'i.card_id', 'i.customer_phone',
 				'u.firstname AS invoice_seller', 's.name AS service_name',
-				 'c.name AS category_name', 's.price as service_price', 'i.total as invoice_total'))
+				'c.name AS category_name', 'i.grand_total as invoice_total'))
 			->from('ci_invoices i')
 			->join('ci_users u', 'u.uid = i.cruser')
 			->join('ci_invoice_details d', 'd.iid = i.iid')
@@ -33,14 +33,15 @@ class Mreports extends CI_Model {
 				$this->_data = array(
 					'invoice_number' => $arr->invoice_number,
 					'invoice_seller' => $arr->invoice_seller,
+					'customer_card' => $arr->card_id,
+					'customer_phone' => $arr->customer_phone,
 					'invoice_date' => mdate('%d-%m-%Y', $arr->invoice_date),
 					'invoice_day' => mdate('%d', $arr->invoice_date),
 					'invoice_month' => mdate('%m', $arr->invoice_date),
 					'invoice_year' => mdate('%Y', $arr->invoice_date),
 					'service_name' => $arr->service_name,
-                    'category_name' => $arr->category_name,
-                    'price' => $arr->service_price,
-					'amount' => $arr->invoice_total
+					'category_name' => $arr->category_name,
+					'invoice_total' => $arr->invoice_total
 				);
 				if ($this->db->insert('ci_reports', $this->_data)) {
 					$this->db->set('report', 1)
