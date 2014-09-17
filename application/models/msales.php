@@ -109,7 +109,6 @@ class Msales extends CI_Model {
 	public function save_invoice_details() {
 		$this->_data = array(
 			'iid' => $this->session->userdata('cur_invoice_id'),
-			'cid' => $this->input->post('cid'),
 			'name' => $this->input->post('name'),
 		);
 		$this->db->insert('ci_invoice_details', $this->_data);
@@ -130,11 +129,12 @@ class Msales extends CI_Model {
 			$this->db->where('i.iid', 0);
 		}
 		$this->db->select(array('d.idid', 'i.invoice_number', 'i.customer_phone', 'i.total',
-				'i.cash_receive', 'i.grand_total', 'i.cash_exchange', 'i.crdate', 'i.modate', 'i.grand_total', 'd.cid', 'd.name', 's.price'))
+				'i.cash_receive', 'i.grand_total', 'i.cash_exchange', 'i.crdate', 'i.modate', 'i.grand_total', 'd.name', 's.price'))
 			->from('ci_invoices i')
 			->join('ci_invoice_details d', 'd.iid = i.iid')
 			->join('ci_services s', 's.name = d.name');
 		$result = $this->db->get();
+		
 		if ($result->num_rows() > 0) {
 			return $result->result();
 		}
@@ -147,7 +147,7 @@ class Msales extends CI_Model {
 	 * @return mixed
 	 */
 	public function get_total() {
-		$this->db->select('(SELECT SUM(sub_total) FROM ci_invoice_details WHERE iid = ' . $this->session->userdata('cur_invoice_id') . ') AS total', FALSE);
+		$this->db->select('(SELECT SUM(s.price) FROM ci_invoice_details d INNER JOIN ci_services s on(d.name = s.name) WHERE iid = ' . $this->session->userdata('cur_invoice_id') . ') AS total', FALSE);
 		$result = $this->db->get('ci_invoice_details')->result();
 		if ($result) {
 			foreach ($result as $r) {
