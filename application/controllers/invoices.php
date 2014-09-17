@@ -17,23 +17,22 @@ class Invoices extends HD_Controller {
 	public function index() {
 		// check in case invoice exist
 		$this->_data['invoice_items'] = $this->msales->check_purchase();
-		//$this->_data['sub_total'] = $this->msales->get_total();
+		$this->_data['sub_total'] = $this->msales->get_total();
 		$this->_data['members'] = $this->mmembers->select_member(1);
 
-		$this->form_validation->set_rules('customer_phone', 'Customer Phone', 'required|trim|min_length[9]');
-		$this->form_validation->set_rules('cash_receive', 'Cash Received', 'required|trim|numeric');
+		$this->form_validation->set_rules('customer_phone', 'Customer Phone', 'min_length[9]');
+		$this->form_validation->set_rules('cash_receive', 'Cash Received', 'required|numeric');
 		if ($this->form_validation->run() == FALSE) {
 			$this->load->view('index', $this->_data);
 		} else {
 			$cash_receive = $this->input->post('cash_receive');
 			$cash_type = $this->input->post('cash_type');
-			//$total = $this->_data['sub_total'];
+			$total = $this->_data['sub_total'];
 
 		
 			$phone = $this->input->post('customer_phone');
 			
-			if ($phone) {
-				
+			if ($phone) {	
 			// Discount
 				$this->_data['dis'] = $this->mmembers->select_member_discount($phone);
 				$discount = $this->_data['dis']->discount;
@@ -43,17 +42,19 @@ class Invoices extends HD_Controller {
 				$grant_total = $total;
 			}
 
-			// Deposit
+			// Exchange
+			if ($cash_receive > $grant_total) {
+				$cash_exchange = $cash_receive - $grant_total;
+			} else {
+				$cash_exchange = 0;
+			}
 			
 			$customer_phone = $this->input->post('customer_phone');
 			$data = array(
 				'customer_phone' => $customer_phone,
 				'total' => $total,
 				'cash_receive' => $cash_receive,
-				'discount' => $discount,
 				'grand_total' => $grant_total,
-				'deposit' => $deposit,
-				'balance' => $balance,
 				'cash_exchange' => $cash_exchange
 			);
 
