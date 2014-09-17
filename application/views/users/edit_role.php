@@ -61,7 +61,10 @@
 							<div class="checkbox"><input type="checkbox" name="mul_categories" value="1" <?php echo set_checkbox('mul_categories', 1, ($role->mul_categories == 1) ? TRUE : FALSE); ?>> Allow to manage <strong>Categories</strong> module</div>
 						</div>
 						<div class="col-sm-12">
-							<div class="checkbox"><input type="checkbox" name="mul_reports" value="1" <?php echo set_checkbox('mul_reports', 1, ($role->mul_reports == 1) ? TRUE : FALSE); ?>> Allow to manage <strong>Reports</strong> module</div>
+                            <div class="checkbox"><input type="checkbox" name="mul_reports" value="1" <?php echo set_checkbox('mul_reports', 1, ($role->mul_reports == 1) ? TRUE : FALSE); ?>> Allow to manage <strong>Reports</strong> module</div>
+                        </div>
+                        <div class="col-sm-12">
+							<div class="checkbox"><input type="checkbox" name="mul_members" value="1" <?php echo set_checkbox('mul_members', 1, ($role->mul_members == 1) ? TRUE : FALSE); ?>> Allow to manage <strong>Members</strong> module</div>
 						</div>
 						<div class="col-sm-12">
 							<div class="checkbox"><input type="checkbox" name="mul_users" value="1" <?php echo set_checkbox('mul_users', 1, ($role->mul_users == 1) ? TRUE : FALSE); ?>> Allow to manage <strong>Users</strong> module</div>

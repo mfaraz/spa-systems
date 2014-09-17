@@ -37,7 +37,7 @@ echo doctype('html5');
 							<div class="form-group last">
 								<?php
 								echo form_submit('login', 'Sign In', 'class="btn btn-primary form-control"');
-								?>
+								?>	
 							</div>
 							<?php
 							echo form_close();

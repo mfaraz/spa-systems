@@ -7,9 +7,8 @@
 			<th>Cashier</th>
 			<th>Category</th>
 			<th>Service</th>
-			<th>Quantity</th>
-			<th>Unit Price</th>
-			<th>Total</th>
+			<th>Price</th>
+			<th>Amount</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -25,9 +24,8 @@
 					<td><?php echo $report->invoice_seller; ?></td>
 					<td class="align-left"><?php echo $report->category_name; ?></td>
 					<td class="align-left"><?php echo $report->service_name; ?></td>
-					<td><?php echo $report->product_qty; ?></td>
-					<td><?php echo '$' . $report->product_price; ?></td>
-					<td><?php echo '$' . $report->product_total; ?></td>
+					<td><?php echo '$' . $report->price; ?></td>
+					<td><?php echo '$' . $report->amount; ?></td>
 				</tr>
 				<?php
 			}

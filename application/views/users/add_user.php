@@ -17,13 +17,13 @@
 					<div class="form-group <?php echo form_is_error('firstname'); ?>">
 						<?php echo form_label('First name', 'firstname', array('class' => 'col-sm-3 control-label')); ?>
 						<div class="col-sm-9">
-							<?php echo form_input('firstname', set_value('firstname'), 'class="form-control input-sm" pattern=".{3,50}" title="Allow enter from 3 to 50 characters"') . form_error('firstname'); ?>
+							<?php echo form_input('firstname', set_value('firstname'), 'class="form-control input-sm" ') . form_error('firstname'); ?>
 						</div>
 					</div>
 					<div class="form-group <?php echo form_is_error('lastname'); ?>">
 						<?php echo form_label('Last name', 'lastname', array('class' => 'col-sm-3 control-label')); ?>
 						<div class="col-sm-9">
-							<?php echo form_input('lastname', set_value('lastname'), 'class="form-control input-sm" pattern=".{3,50}" title="Allow enter from 3 to 50 characters"') . form_error('lastname'); ?>
+							<?php echo form_input('lastname', set_value('lastname'), 'class="form-control input-sm" ') . form_error('lastname'); ?>
 						</div>
 					</div>
 					<div class="form-group <?php echo form_is_error('username'); ?>">

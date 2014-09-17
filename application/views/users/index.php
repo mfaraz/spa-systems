@@ -56,7 +56,7 @@
 								<td>
 									<?php
 									echo anchor('users/edit_user/' . $user->uid, '<span class="glyphicon
-										glyphicon-edit"></span>', 'class="btn btn-warning btn-xs" title="Edit"') . '&nbsp;' . anchor('users/change_password/' . $user->uid, '<span class="glyphicon glyphicon-lock"></span>', 'class="btn btn-default btn-xs" title="Change Password" onclick="return confirm(\'Are you sure you want to change password?\')"') . '&nbsp;' . anchor('users/discard_user/' . $user->uid, '<span class="glyphicon glyphicon-trash"></span>', (($user->uid > 1) ? '' : 'disabled="disabled"') . 'class="btn btn-danger btn-xs" title="Delete"');
+										glyphicon-edit"></span>', 'class="btn btn-warning btn-xs" title="Edit"') . '&nbsp;' . anchor('users/change_password/' . $user->uid, '<span class="glyphicon glyphicon-lock"></span>', 'class="btn btn-default btn-xs" title="Change Password" onclick="return confirm(\'Are you sure you want to change password?\')"') . '&nbsp;' . anchor('users/discard_user/' . $user->uid, '<span class="glyphicon glyphicon-trash"></span>', (($user->uid > 1) ? '' : 'disabled="disabled"') . 'class="btn btn-danger btn-xs" title="Delete" onclick="return confirm(\'Are you sure you want to delete?\')"');
 									?>
 								</td>
 								</tr>
@@ -94,7 +94,8 @@
 								<th>Deposits</th>
 								<th>Products</th>
 								<th>Categories</th>
-								<th>Reports</th>
+                                <th>Reports</th>
+								<th>Members</th>
 								<th>Users</th>
 								<th>Settings</th>
 							</tr>
@@ -114,7 +115,8 @@
 										<td><?php echo $role->mul_deposits == 1 ? $yes : $no; ?></td>
 										<td><?php echo $role->mul_products == 1 ? $yes : $no; ?></td>
 										<td><?php echo $role->mul_categories == 1 ? $yes : $no; ?></td>
-										<td><?php echo $role->mul_reports == 1 ? $yes : $no; ?></td>
+                                        <td><?php echo $role->mul_reports == 1 ? $yes : $no; ?></td>
+										<td><?php echo $role->mul_members == 1 ? $yes : $no; ?></td>
 										<td><?php echo $role->mul_users == 1 ? $yes : $no; ?></td>
 										<td><?php echo $role->mul_settings == 1 ? $yes : $no; ?></td>
 										<td><?php echo mdate('%d-%m-%Y', $role->crdate); ?></td>

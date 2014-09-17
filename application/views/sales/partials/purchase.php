@@ -22,6 +22,6 @@
 			</tbody>
 		</table>
 	<?php } else { ?>
-		<p>There is not any purchase product yet!</p>
+		<p>There is not any purchase service yet!</p>
 	<?php } ?>
 </div>
