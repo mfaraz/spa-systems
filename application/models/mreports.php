@@ -17,8 +17,8 @@ class Mreports extends CI_Model {
 	 */
 	public function mis_report() {
 		$this->db->select(array('i.iid', 'i.invoice_number', 'i.crdate AS invoice_date',
-				'u.firstname AS invoice_seller', 's.name AS service_name', 'd.qty AS product_qty',
-				'd.unit_price AS product_price', 'd.sub_total AS product_total', 'c.name AS category_name'))
+				'u.firstname AS invoice_seller', 's.name AS service_name',
+				 'c.name AS category_name', 's.price as service_price', 'i.total as invoice_total'))
 			->from('ci_invoices i')
 			->join('ci_users u', 'u.uid = i.cruser')
 			->join('ci_invoice_details d', 'd.iid = i.iid')
@@ -38,10 +38,9 @@ class Mreports extends CI_Model {
 					'invoice_month' => mdate('%m', $arr->invoice_date),
 					'invoice_year' => mdate('%Y', $arr->invoice_date),
 					'service_name' => $arr->service_name,
-					'product_qty' => $arr->product_qty,
-					'product_price' => $arr->product_price,
-					'product_total' => $arr->product_total,
-					'category_name' => $arr->category_name
+                    'category_name' => $arr->category_name,
+                    'price' => $arr->service_price,
+					'amount' => $arr->invoice_total
 				);
 				if ($this->db->insert('ci_reports', $this->_data)) {
 					$this->db->set('report', 1)
