@@ -132,8 +132,13 @@ class Users extends HD_Controller {
 				'label' => '',
 				'rules' => 'trim'
 			),
+            array(
+                'field' => 'mul_reports',
+                'label' => '',
+                'rules' => 'trim'
+            ),
 			array(
-				'field' => 'mul_reports',
+				'field' => 'mul_members',
 				'label' => '',
 				'rules' => 'trim'
 			),
@@ -158,7 +163,8 @@ class Users extends HD_Controller {
 		$this->form_validation->set_checkbox('mul_deposits');
 		$this->form_validation->set_checkbox('mul_products');
 		$this->form_validation->set_checkbox('mul_categories');
-		$this->form_validation->set_checkbox('mul_reports');
+        $this->form_validation->set_checkbox('mul_reports');
+		$this->form_validation->set_checkbox('mul_members');
 		$this->form_validation->set_checkbox('mul_users');
 		$this->form_validation->set_checkbox('mul_settings');
 		$this->form_validation->set_checkbox('status');
@@ -254,7 +260,7 @@ class Users extends HD_Controller {
 			array(
 				'field' => 'name',
 				'label' => 'Name',
-				'rules' => 'trim|max_length[50]|alpha|callback_uniqueExcept[ci_roles.name, rid]'
+				'rules' => 'trim|max_length[50]|callback_uniqueExcept[ci_roles.name, rid]'
 			),
 			array(
 				'field' => 'description',
@@ -282,7 +288,12 @@ class Users extends HD_Controller {
 				'rules' => 'trim'
 			),
 			array(
-				'field' => 'mul_reports',
+                'field' => 'mul_reports',
+                'label' => '',
+                'rules' => 'trim'
+            ),
+            array(
+				'field' => 'mul_members',
 				'label' => '',
 				'rules' => 'trim'
 			),
@@ -307,7 +318,8 @@ class Users extends HD_Controller {
 		$this->form_validation->set_checkbox('mul_deposits');
 		$this->form_validation->set_checkbox('mul_products');
 		$this->form_validation->set_checkbox('mul_categories');
-		$this->form_validation->set_checkbox('mul_reports');
+        $this->form_validation->set_checkbox('mul_reports');
+		$this->form_validation->set_checkbox('mul_members');
 		$this->form_validation->set_checkbox('mul_users');
 		$this->form_validation->set_checkbox('mul_settings');
 		$this->form_validation->set_checkbox('status');
