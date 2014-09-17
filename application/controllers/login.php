@@ -35,6 +35,7 @@ class Login extends CI_Controller {
 				$this->create_session_login($result);
 			}
 		} else {
+			
 			$this->load->view('login', $this->_data);
 		}
 	}
@@ -61,7 +62,7 @@ class Login extends CI_Controller {
 				'mul_reports' => $result->mul_reports,
 				'mul_deposits' => $result->mul_deposits,
 				'mul_users' => $result->mul_users,
-				'mul_members' => '1',
+				'mul_members' => $result->mul_members,
 				'mul_settings' => $result->mul_settings
 			));
 			redirect('welcome/');
