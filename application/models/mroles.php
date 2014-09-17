@@ -81,7 +81,10 @@ class Mroles extends CI_Model {
 			$this->db->set('mul_categories', 0);
 		}
 		if (empty($this->_data['mul_reports'])) {
-			$this->db->set('mul_reports', 0);
+            $this->db->set('mul_reports', 0);
+        }
+        if (empty($this->_data['mul_members'])) {
+			$this->db->set('mul_members', 0);
 		}
 		if (empty($this->_data['mul_users'])) {
 			$this->db->set('mul_users', 0);
