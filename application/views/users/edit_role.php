@@ -1,5 +1,5 @@
 <div class="panel-heading">
-	<h3 class="panel-title">New - <?php echo $title; ?></h3>
+	<h3 class="panel-title">Edit - <?php echo $title; ?></h3>
 </div>
 <div class="panel-body">
 	<?php
@@ -52,10 +52,7 @@
 							<div class="checkbox"><input type="checkbox" name="mul_sales" value="1" <?php echo set_checkbox('mul_sales', 1, ($role->mul_sales == 1) ? TRUE : FALSE); ?>> Allow to manage <strong>Sales</strong> module</div>
 						</div>
 						<div class="col-sm-12">
-							<div class="checkbox"><input type="checkbox" name="mul_deposits" value="1" <?php echo set_checkbox('mul_deposits', 1, ($role->mul_deposits == 1) ? TRUE : FALSE); ?>> Allow to manage <strong>Deposits</strong> module</div>
-						</div>
-						<div class="col-sm-12">
-							<div class="checkbox"><input type="checkbox" name="mul_products" value="1" <?php echo set_checkbox('mul_products', 1, ($role->mul_products == 1) ? TRUE : FALSE); ?>> Allow to manage <strong>Products</strong> module</div>
+							<div class="checkbox"><input type="checkbox" name="mul_services" value="1" <?php echo set_checkbox('mul_services', 1, ($role->mul_services == 1) ? TRUE : FALSE); ?>> Allow to manage <strong>Services</strong> module</div>
 						</div>
 						<div class="col-sm-12">
 							<div class="checkbox"><input type="checkbox" name="mul_categories" value="1" <?php echo set_checkbox('mul_categories', 1, ($role->mul_categories == 1) ? TRUE : FALSE); ?>> Allow to manage <strong>Categories</strong> module</div>

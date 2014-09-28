@@ -8,7 +8,7 @@ class Users extends HD_Controller {
 	public function __construct() {
 		parent::__construct();
 		$this->_data['title'] = 'User Management';
-		$this->load->model(array('musers', 'mroles'));
+		$this->load->model(array('mroles'));
 	}
 
 	/**
@@ -113,17 +113,17 @@ class Users extends HD_Controller {
 				'rules' => 'trim|max_length[250]'
 			),
 			array(
+				'field' => 'mul_welcome',
+				'label' => '',
+				'rules' => 'trim'
+			),
+			array(
 				'field' => 'mul_sales',
 				'label' => '',
 				'rules' => 'trim'
 			),
 			array(
-				'field' => 'mul_deposits',
-				'label' => '',
-				'rules' => 'trim'
-			),
-			array(
-				'field' => 'mul_products',
+				'field' => 'mul_services',
 				'label' => '',
 				'rules' => 'trim'
 			),
@@ -132,11 +132,26 @@ class Users extends HD_Controller {
 				'label' => '',
 				'rules' => 'trim'
 			),
-            array(
-                'field' => 'mul_reports',
-                'label' => '',
-                'rules' => 'trim'
-            ),
+			array(
+				'field' => 'mul_reports',
+				'label' => '',
+				'rules' => 'trim'
+			),
+			array(
+				'field' => 'mul_rooms',
+				'label' => '',
+				'rules' => 'trim'
+			),
+			array(
+				'field' => 'mul_referrers',
+				'label' => '',
+				'rules' => 'trim'
+			),
+			array(
+				'field' => 'mul_employees',
+				'label' => '',
+				'rules' => 'trim'
+			),
 			array(
 				'field' => 'mul_members',
 				'label' => '',
@@ -159,11 +174,14 @@ class Users extends HD_Controller {
 			)
 		);
 		$this->form_validation->set_rules($config);
+		$this->form_validation->set_checkbox('mul_welcome');
 		$this->form_validation->set_checkbox('mul_sales');
-		$this->form_validation->set_checkbox('mul_deposits');
-		$this->form_validation->set_checkbox('mul_products');
+		$this->form_validation->set_checkbox('mul_services');
 		$this->form_validation->set_checkbox('mul_categories');
-        $this->form_validation->set_checkbox('mul_reports');
+		$this->form_validation->set_checkbox('mul_reports');
+		$this->form_validation->set_checkbox('mul_rooms');
+		$this->form_validation->set_checkbox('mul_referrers');
+		$this->form_validation->set_checkbox('mul_employees');
 		$this->form_validation->set_checkbox('mul_members');
 		$this->form_validation->set_checkbox('mul_users');
 		$this->form_validation->set_checkbox('mul_settings');
@@ -235,7 +253,7 @@ class Users extends HD_Controller {
 			$this->load->view('index', $this->_data);
 		} else {
 			if ($this->musers->edit()) {
-				if (($this->uri->segment(3) == $this->session->userdata('ci_id')) && ($this->input->post('username') != $this->session->userdata('ci_username'))) {
+				if (($this->uri->segment(3) == $this->musers->has_login('sess_id')) && ($this->input->post('username') != $this->musers->has_login('sess_username'))) {
 					redirect('login/logout', 'refresh');
 				} else {
 					$this->session->set_flashdata('message', alert_message("User account has been updated!", 'success'));
@@ -268,17 +286,17 @@ class Users extends HD_Controller {
 				'rules' => 'trim|max_length[250]'
 			),
 			array(
+				'field' => 'mul_welcome',
+				'label' => '',
+				'rules' => 'trim'
+			),
+			array(
 				'field' => 'mul_sales',
 				'label' => '',
 				'rules' => 'trim'
 			),
 			array(
-				'field' => 'mul_deposits',
-				'label' => '',
-				'rules' => 'trim'
-			),
-			array(
-				'field' => 'mul_products',
+				'field' => 'mul_services',
 				'label' => '',
 				'rules' => 'trim'
 			),
@@ -288,11 +306,26 @@ class Users extends HD_Controller {
 				'rules' => 'trim'
 			),
 			array(
-                'field' => 'mul_reports',
-                'label' => '',
-                'rules' => 'trim'
-            ),
-            array(
+				'field' => 'mul_reports',
+				'label' => '',
+				'rules' => 'trim'
+			),
+			array(
+				'field' => 'mul_rooms',
+				'label' => '',
+				'rules' => 'trim'
+			),
+			array(
+				'field' => 'mul_referrers',
+				'label' => '',
+				'rules' => 'trim'
+			),
+			array(
+				'field' => 'mul_employees',
+				'label' => '',
+				'rules' => 'trim'
+			),
+			array(
 				'field' => 'mul_members',
 				'label' => '',
 				'rules' => 'trim'
@@ -314,11 +347,14 @@ class Users extends HD_Controller {
 			)
 		);
 		$this->form_validation->set_rules($config);
+		$this->form_validation->set_checkbox('mul_welcome');
 		$this->form_validation->set_checkbox('mul_sales');
-		$this->form_validation->set_checkbox('mul_deposits');
-		$this->form_validation->set_checkbox('mul_products');
+		$this->form_validation->set_checkbox('mul_services');
 		$this->form_validation->set_checkbox('mul_categories');
-        $this->form_validation->set_checkbox('mul_reports');
+		$this->form_validation->set_checkbox('mul_reports');
+		$this->form_validation->set_checkbox('mul_rooms');
+		$this->form_validation->set_checkbox('mul_referrers');
+		$this->form_validation->set_checkbox('mul_employees');
 		$this->form_validation->set_checkbox('mul_members');
 		$this->form_validation->set_checkbox('mul_users');
 		$this->form_validation->set_checkbox('mul_settings');
@@ -348,7 +384,7 @@ class Users extends HD_Controller {
 			$this->load->view('index', $this->_data);
 		} else {
 			if ($this->musers->change_password()) {
-				if ($this->uri->segment(3) == $this->session->userdata('ci_id')) {
+				if ($this->uri->segment(3) == $this->musers->has_login('sess_id')) {
 					redirect('login/logout', 'refresh');
 				} else {
 					$this->session->set_flashdata('message', alert_message("Password has beed changed!", 'success'));

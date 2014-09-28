@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.0.4
+-- version 4.1.14
 -- http://www.phpmyadmin.net
 --
--- Host: localhost
--- Generation Time: Sep 28, 2014 at 07:34 PM
--- Server version: 5.6.12-log
--- PHP Version: 5.4.12
+-- Host: 127.0.0.1
+-- Generation Time: Sep 28, 2014 at 02:14 PM
+-- Server version: 5.6.17
+-- PHP Version: 5.5.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -16,6 +16,11 @@ SET time_zone = "+00:00";
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
 /*!40101 SET NAMES utf8 */;
 
+--
+-- Database: `itservices_spa`
+--
+
+-- --------------------------------------------------------
 
 --
 -- Table structure for table `ci_categories`
@@ -256,8 +261,7 @@ CREATE TABLE IF NOT EXISTS `ci_roles` (
   `description` varchar(250) DEFAULT '',
   `mul_welcome` tinyint(1) DEFAULT '0',
   `mul_sales` tinyint(1) DEFAULT '0',
-  `mul_deposits` tinyint(1) DEFAULT '0',
-  `mul_products` tinyint(1) DEFAULT '0',
+  `mul_services` tinyint(1) DEFAULT '0',
   `mul_categories` tinyint(1) DEFAULT '0',
   `mul_reports` tinyint(1) DEFAULT '0',
   `mul_members` tinyint(1) NOT NULL,
@@ -277,10 +281,10 @@ CREATE TABLE IF NOT EXISTS `ci_roles` (
 -- Dumping data for table `ci_roles`
 --
 
-INSERT INTO `ci_roles` (`rid`, `name`, `description`, `mul_welcome`, `mul_sales`, `mul_deposits`, `mul_products`, `mul_categories`, `mul_reports`, `mul_members`, `mul_employees`, `mul_referrers`, `mul_rooms`, `mul_users`, `mul_settings`, `crdate`, `modate`, `status`) VALUES
-(1, 'System Administrator', 'Super user in this systems, in which has full control permission to manage in the project systems.', 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1406449163, 1411796501, 1),
-(2, 'Cashier', '', 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 1406449163, 1411220266, 1),
-(4, 'employee', '', 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1411148675, 0, 1);
+INSERT INTO `ci_roles` (`rid`, `name`, `description`, `mul_welcome`, `mul_sales`, `mul_services`, `mul_categories`, `mul_reports`, `mul_members`, `mul_employees`, `mul_referrers`, `mul_rooms`, `mul_users`, `mul_settings`, `crdate`, `modate`, `status`) VALUES
+(1, 'System Administrator', 'Super user in this systems, in which has full control permission to manage in the project systems.', 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1406449163, 1411796501, 1),
+(2, 'Cashier', '', 1, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 1406449163, 1411220266, 1),
+(4, 'employee', '', 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1411148675, 0, 1);
 
 -- --------------------------------------------------------
 
@@ -343,25 +347,31 @@ INSERT INTO `ci_services` (`pid`, `cid`, `cruser`, `mouser`, `name`, `price`, `d
 --
 
 CREATE TABLE IF NOT EXISTS `ci_sessions` (
-  `session_id` varchar(40) NOT NULL DEFAULT '0',
-  `ip_address` varchar(45) NOT NULL DEFAULT '0',
-  `user_agent` varchar(120) NOT NULL,
-  `last_activity` int(10) unsigned NOT NULL DEFAULT '0',
-  `user_data` text NOT NULL,
-  PRIMARY KEY (`session_id`),
-  KEY `last_activity_idx` (`last_activity`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+  `sess_id` tinyint(1) NOT NULL DEFAULT '0',
+  `sess_username` varchar(50) NOT NULL DEFAULT '',
+  `sess_fullname` varchar(100) NOT NULL DEFAULT '',
+  `sess_role` varchar(50) NOT NULL DEFAULT '',
+  `mul_welcome` tinyint(1) NOT NULL DEFAULT '0',
+  `mul_sales` tinyint(1) NOT NULL DEFAULT '0',
+  `mul_services` tinyint(1) NOT NULL DEFAULT '0',
+  `mul_categories` tinyint(1) NOT NULL DEFAULT '0',
+  `mul_reports` tinyint(1) NOT NULL DEFAULT '0',
+  `mul_members` tinyint(1) NOT NULL DEFAULT '0',
+  `mul_referrers` tinyint(1) NOT NULL DEFAULT '0',
+  `mul_employees` tinyint(1) NOT NULL DEFAULT '0',
+  `mul_rooms` tinyint(1) NOT NULL DEFAULT '0',
+  `mul_users` tinyint(1) NOT NULL DEFAULT '0',
+  `mul_settings` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`sess_id`),
+  UNIQUE KEY `sess_username` (`sess_username`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `ci_sessions`
 --
 
-INSERT INTO `ci_sessions` (`session_id`, `ip_address`, `user_agent`, `last_activity`, `user_data`) VALUES
-('9c79eea50b5758a45a9728c0c5fc8de1', '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.3; WOW64; rv:32.0) Gecko/20100101 Firefox/32.0', 1411854940, ''),
-('c3a5cb24e7d326fde7ab52e99230243b', '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.3; WOW64; rv:32.0) Gecko/20100101 Firefox/32.0', 1411889544, 'a:19:{s:9:"user_data";s:0:"";s:5:"ci_id";s:1:"1";s:11:"ci_username";s:5:"admin";s:12:"ci_firstname";s:3:"Man";s:11:"ci_fullname";s:8:"Man Math";s:7:"ci_role";s:20:"System Administrator";s:11:"mul_welcome";s:1:"1";s:9:"mul_sales";s:1:"1";s:12:"mul_products";s:1:"1";s:14:"mul_categories";s:1:"1";s:11:"mul_reports";s:1:"1";s:12:"mul_deposits";s:1:"1";s:9:"mul_users";s:1:"1";s:11:"mul_members";s:1:"1";s:13:"mul_referrers";s:1:"1";s:13:"mul_employees";s:1:"1";s:9:"mul_rooms";s:1:"1";s:12:"mul_settings";s:1:"1";s:4:"type";s:5:"daily";}'),
-('a99ad2043b9cdcf0806c6e6a62d757a6', '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.3; WOW64; rv:32.0) Gecko/20100101 Firefox/32.0', 1411919401, ''),
-('0fdf3f1dd6e12ada8a05c31101b628ba', '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.3; WOW64; rv:32.0) Gecko/20100101 Firefox/32.0', 1411919401, ''),
-('9039decd6fb2ac1e4e0ea899b9f2ee88', '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.3; WOW64; rv:32.0) Gecko/20100101 Firefox/32.0', 1411919413, 'a:19:{s:9:"user_data";s:0:"";s:5:"ci_id";s:1:"1";s:11:"ci_username";s:5:"admin";s:12:"ci_firstname";s:3:"Man";s:11:"ci_fullname";s:8:"Man Math";s:7:"ci_role";s:20:"System Administrator";s:11:"mul_welcome";s:1:"1";s:9:"mul_sales";s:1:"1";s:12:"mul_products";s:1:"1";s:14:"mul_categories";s:1:"1";s:11:"mul_reports";s:1:"1";s:12:"mul_deposits";s:1:"1";s:9:"mul_users";s:1:"1";s:11:"mul_members";s:1:"1";s:13:"mul_referrers";s:1:"1";s:13:"mul_employees";s:1:"1";s:9:"mul_rooms";s:1:"1";s:12:"mul_settings";s:1:"1";s:4:"type";s:5:"daily";}');
+INSERT INTO `ci_sessions` (`sess_id`, `sess_username`, `sess_fullname`, `sess_role`, `mul_welcome`, `mul_sales`, `mul_services`, `mul_categories`, `mul_reports`, `mul_members`, `mul_referrers`, `mul_employees`, `mul_rooms`, `mul_users`, `mul_settings`) VALUES
+(1, 'admin', 'Man Math', 'System Administrator', 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1);
 
 -- --------------------------------------------------------
 

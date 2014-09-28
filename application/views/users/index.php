@@ -82,7 +82,7 @@
 							<tr>
 								<th rowspan="2" class="valign-middle">N&ordm;</th>
 								<th rowspan="2" class="valign-middle">Role</th>
-								<th colspan="12">Modules Permission</th>
+								<th colspan="11">Modules Permission</th>
 								<th rowspan="2" class="valign-middle">Date Created</th>
 								<th rowspan="2" class="valign-middle">Date Modified</th>
 								<th rowspan="2" class="valign-middle">Status</th>
@@ -91,8 +91,7 @@
 							<tr>
 								<th>Home</th>
 								<th>Sales</th>
-								<th>Deposits</th>
-								<th>Products</th>
+								<th>Services</th>
 								<th>Categories</th>
                                 <th>Reports</th>
                                 <th>Rooms</th>
@@ -115,13 +114,12 @@
 										<td class="align-left"><?php echo $role->name; ?></td>
 										<td><?php echo $role->mul_welcome == 1 ? $yes : $no; ?></td>
 										<td><?php echo $role->mul_sales == 1 ? $yes : $no; ?></td>
-										<td><?php echo $role->mul_deposits == 1 ? $yes : $no; ?></td>
-										<td><?php echo $role->mul_products == 1 ? $yes : $no; ?></td>
+										<td><?php echo $role->mul_services == 1 ? $yes : $no; ?></td>
 										<td><?php echo $role->mul_categories == 1 ? $yes : $no; ?></td>
-                                        <td><?php echo $role->mul_reports == 1 ? $yes : $no; ?></td>
-                                        <td><?php echo $role->mul_rooms == 1 ? $yes : $no; ?></td>
-                                        <td><?php echo $role->mul_employees == 1 ? $yes : $no; ?></td>
-                                        <td><?php echo $role->mul_referrers == 1 ? $yes : $no; ?></td>
+										<td><?php echo $role->mul_reports == 1 ? $yes : $no; ?></td>
+										<td><?php echo $role->mul_rooms == 1 ? $yes : $no; ?></td>
+										<td><?php echo $role->mul_employees == 1 ? $yes : $no; ?></td>
+										<td><?php echo $role->mul_referrers == 1 ? $yes : $no; ?></td>
 										<td><?php echo $role->mul_members == 1 ? $yes : $no; ?></td>
 										<td><?php echo $role->mul_users == 1 ? $yes : $no; ?></td>
 										<td><?php echo $role->mul_settings == 1 ? $yes : $no; ?></td>

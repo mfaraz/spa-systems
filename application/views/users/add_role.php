@@ -52,10 +52,7 @@
 							<div class="checkbox"><input type="checkbox" name="mul_sales" value="1" <?php echo set_checkbox('mul_sales', 1, FALSE); ?>> Allow to manage <strong>Sales</strong> module</div>
 						</div>
 						<div class="col-sm-12">
-							<div class="checkbox"><input type="checkbox" name="mul_deposits" value="1" <?php echo set_checkbox('mul_deposits', 1, FALSE); ?>> Allow to manage <strong>Deposits</strong> module</div>
-						</div>
-						<div class="col-sm-12">
-							<div class="checkbox"><input type="checkbox" name="mul_products" value="1" <?php echo set_checkbox('mul_products', 1, FALSE); ?>> Allow to manage <strong>Products</strong> module</div>
+							<div class="checkbox"><input type="checkbox" name="mul_services" value="1" <?php echo set_checkbox('mul_services', 1, FALSE); ?>> Allow to manage <strong>Services</strong> module</div>
 						</div>
 						<div class="col-sm-12">
 							<div class="checkbox"><input type="checkbox" name="mul_categories" value="1" <?php echo set_checkbox('mul_categories', 1, FALSE); ?>> Allow to manage <strong>Categories</strong> module</div>
@@ -71,7 +68,7 @@
                         </div>
                         <div class="col-sm-12">
                             <div class="checkbox"><input type="checkbox" name="mul_employees" value="1" <?php echo set_checkbox('mul_employees', 1, FALSE); ?>> Allow to manage <strong>Employees</strong> module</div>
-                        </div> 
+                        </div>
                         <div class="col-sm-12">
 							<div class="checkbox"><input type="checkbox" name="mul_members" value="1" <?php echo set_checkbox('mul_members', 1, FALSE); ?>> Allow to manage <strong>Members</strong> module</div>
 						</div>

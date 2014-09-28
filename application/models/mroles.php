@@ -71,19 +71,16 @@ class Mroles extends CI_Model {
 		if (empty($this->_data['mul_sales'])) {
 			$this->db->set('mul_sales', 0);
 		}
-		if (empty($this->_data['mul_deposits'])) {
-			$this->db->set('mul_deposits', 0);
-		}
-		if (empty($this->_data['mul_products'])) {
-			$this->db->set('mul_products', 0);
+		if (empty($this->_data['mul_services'])) {
+			$this->db->set('mul_services', 0);
 		}
 		if (empty($this->_data['mul_categories'])) {
 			$this->db->set('mul_categories', 0);
 		}
 		if (empty($this->_data['mul_reports'])) {
-            $this->db->set('mul_reports', 0);
-        }
-        if (empty($this->_data['mul_members'])) {
+			$this->db->set('mul_reports', 0);
+		}
+		if (empty($this->_data['mul_members'])) {
 			$this->db->set('mul_members', 0);
 		}
 		if (empty($this->_data['mul_users'])) {

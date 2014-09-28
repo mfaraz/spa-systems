@@ -2,7 +2,7 @@
 	<div class="container-fluid">
 		<nav class="navbar-collapse collapse">
 			<ul class="nav navbar-nav pull-left">
-				<?php if ($this->session->userdata('mul_welcome')): ?>
+				<?php if ($this->musers->has_login('mul_welcome')): ?>
 					<li class="<?php echo $this->uri->segment(1) == 'welcome' ? 'active' : '' ?>">
 						<?php
 						echo anchor('welcome/', '<i class="fa fa-home fa-3x"></i>Home', 'title="Dashboard"');
@@ -10,7 +10,7 @@
 					</li>
 					<?php
 				endif;
-				if ($this->session->userdata('mul_sales')):
+				if ($this->musers->has_login('mul_sales')):
 					?>
 					<li class="<?php echo $this->uri->segment(1) == 'sales' ? 'active' : '' ?>">
 						<?php
@@ -19,7 +19,7 @@
 					</li>
 					<?php
 				endif;
-				if ($this->session->userdata('mul_products')):
+				if ($this->musers->has_login('mul_services')):
 					?>
 					<li class="<?php echo $this->uri->segment(1) == 'services' ? 'active' : '' ?>">
 						<?php
@@ -28,7 +28,7 @@
 					</li>
 					<?php
 				endif;
-				if ($this->session->userdata('mul_categories')):
+				if ($this->musers->has_login('mul_categories')):
 					?>
 					<li class="<?php echo $this->uri->segment(1) == 'categories' ? 'active' : '' ?>">
 						<?php
@@ -37,7 +37,7 @@
 					</li>
 					<?php
 				endif;
-				if ($this->session->userdata('mul_reports')):
+				if ($this->musers->has_login('mul_reports')):
 					?>
 					<li class="<?php echo $this->uri->segment(1) == 'reports' ? 'active' : '' ?>">
 						<?php
@@ -46,34 +46,34 @@
 					</li>
 					<?php
 				endif;
-				if ($this->session->userdata('mul_rooms')):
-                    ?>
-                    <li class="<?php echo $this->uri->segment(1) == 'rooms' ? 'active' : '' ?>">
-                        <?php
-                        echo anchor('rooms/', '<i class="fa fa-home fa-3x"></i>Rooms', 'title="Rooms"');
-                        ?>
-                    </li>
-                    <?php
-                endif;
-                if ($this->session->userdata('mul_employees')):
-                    ?>
-                    <li class="<?php echo $this->uri->segment(1) == 'employees' ? 'active' : '' ?>">
-                        <?php
-                        echo anchor('employees/', '<i class="fa fa-users fa-3x"></i>Employees', 'title="Employees"');
-                        ?>
-                    </li>
-                    <?php
-                endif;
-                if ($this->session->userdata('mul_members')):
-                    ?>
-                    <li class="<?php echo $this->uri->segment(1) == 'members' ? 'active' : '' ?>">
-                        <?php
-                        echo anchor('members/', '<i class="fa fa-users fa-3x"></i>Members', 'title="Members"');
-                        ?>
-                    </li>
-                    <?php
-                endif;
-                 if ($this->session->userdata('mul_referrers')):
+				if ($this->musers->has_login('mul_rooms')):
+					?>
+					<li class="<?php echo $this->uri->segment(1) == 'rooms' ? 'active' : '' ?>">
+						<?php
+						echo anchor('rooms/', '<i class="fa fa-home fa-3x"></i>Rooms', 'title="Rooms"');
+						?>
+					</li>
+					<?php
+				endif;
+				if ($this->musers->has_login('mul_employees')):
+					?>
+					<li class="<?php echo $this->uri->segment(1) == 'employees' ? 'active' : '' ?>">
+						<?php
+						echo anchor('employees/', '<i class="fa fa-users fa-3x"></i>Employees', 'title="Employees"');
+						?>
+					</li>
+					<?php
+				endif;
+				if ($this->musers->has_login('mul_members')):
+					?>
+					<li class="<?php echo $this->uri->segment(1) == 'members' ? 'active' : '' ?>">
+						<?php
+						echo anchor('members/', '<i class="fa fa-users fa-3x"></i>Members', 'title="Members"');
+						?>
+					</li>
+					<?php
+				endif;
+				if ($this->musers->has_login('mul_referrers')):
 					?>
 					<li class="<?php echo $this->uri->segment(1) == 'referrers' ? 'active' : '' ?>">
 						<?php
@@ -82,7 +82,7 @@
 					</li>
 					<?php
 				endif;
-				if ($this->session->userdata('mul_users')):
+				if ($this->musers->has_login('mul_users')):
 					?>
 					<li class="<?php echo $this->uri->segment(1) == 'users' ? 'active' : '' ?>">
 						<?php
@@ -91,7 +91,7 @@
 					</li>
 					<?php
 				endif;
-				if ($this->session->userdata('mul_settings')):
+				if ($this->musers->has_login('mul_settings')):
 					?>
 					<li class="<?php echo $this->uri->segment(1) == 'settings' ? 'active' : '' ?>">
 						<?php
@@ -101,13 +101,6 @@
 				<?php endif; ?>
 			</ul>
 			<ul class="nav navbar-nav pull-right">
-				<li>
-					<a>
-						<?php
-						echo $this->session->userdata('username') ? $this->session->userdata('fullname') . '(' . $this->session->userdata('role') . ')' : NULL;
-						?>
-					</a>
-				</li>
 				<li><?php echo anchor('login/logout/', '<i class="fa fa-sign-out fa-3x"></i>Sign Out', 'title = "Sign Out"'); ?></li>
 			</ul>
 		</nav>

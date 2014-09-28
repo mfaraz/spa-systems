@@ -37,7 +37,7 @@ class Msales extends CI_Model {
 	 */
 	public function save_invoice() {
 		$this->_data = array(
-			'cruser' => $this->session->userdata('ci_id'),
+			'cruser' => $this->musers->has_login('sess_id'),
 			'crdate' => time()
 		);
 		$this->db->insert('ci_invoices', $this->_data);
@@ -109,8 +109,8 @@ class Msales extends CI_Model {
 	public function save_invoice_details() {
 		$this->_data = array(
 			'iid' => $this->session->userdata('cur_invoice_id'),
-            'name' => $this->input->post('name'),
-            'employee' => $this->input->post('employee'),
+			'name' => $this->input->post('name'),
+			'employee' => $this->input->post('employee'),
 			'room' => $this->input->post('room')
 		);
 		$this->db->insert('ci_invoice_details', $this->_data);
@@ -136,7 +136,7 @@ class Msales extends CI_Model {
 			->join('ci_invoice_details d', 'd.iid = i.iid')
 			->join('ci_services s', 's.name = d.name');
 		$result = $this->db->get();
-		
+
 		if ($result->num_rows() > 0) {
 			return $result->result();
 		}
@@ -182,25 +182,25 @@ class Msales extends CI_Model {
 	 * @param string $name
 	 * @param integer $qty
 	 */
-	/*public function cut_stock($name, $qty) {
-		$result = $this->db->select(array('unit_in_stocks', 'unit_in_sales'))
-			->where('name', $name)
-			->where('unit_in_stocks > ', 0)
-			->get('ci_products');
+	/* public function cut_stock($name, $qty) {
+	  $result = $this->db->select(array('unit_in_stocks', 'unit_in_sales'))
+	  ->where('name', $name)
+	  ->where('unit_in_stocks > ', 0)
+	  ->get('ci_products');
 
-		if ($result->num_rows() > 0) {
-			foreach ($result->result() as $arr) {
-				$new_unit_in_stocks = $arr->unit_in_stocks - $qty;
-				$new_unit_in_sales = $arr->unit_in_sales + $qty;
+	  if ($result->num_rows() > 0) {
+	  foreach ($result->result() as $arr) {
+	  $new_unit_in_stocks = $arr->unit_in_stocks - $qty;
+	  $new_unit_in_sales = $arr->unit_in_sales + $qty;
 
-				$this->db->set('unit_in_stocks', $new_unit_in_stocks)
-					->set('unit_in_sales', $new_unit_in_sales)
-					->where('name', $name)
-					->update('ci_products');
-				return TRUE;
-			}
-		}
-	} */
+	  $this->db->set('unit_in_stocks', $new_unit_in_stocks)
+	  ->set('unit_in_sales', $new_unit_in_sales)
+	  ->where('name', $name)
+	  ->update('ci_products');
+	  return TRUE;
+	  }
+	  }
+	  } */
 
 	/**
 	 * Clear invoice previous history

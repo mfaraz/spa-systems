@@ -63,7 +63,7 @@ class Mservices extends CI_Model {
 	 * @return boolean
 	 */
 	public function add() {
-		$this->db->set('cruser', $this->session->userdata('ci_id'));
+		$this->db->set('cruser', $this->musers->has_login('sess_id'));
 		$this->db->set('crdate', time(), FALSE);
 		$this->_data = $this->input->post();
 		return $this->db->insert('ci_services', $this->_data) ? TRUE : FALSE;
@@ -76,7 +76,7 @@ class Mservices extends CI_Model {
 	 * @return boolean
 	 */
 	public function edit() {
-		$this->db->set('mouser', $this->session->userdata('ci_id'));
+		$this->db->set('mouser', $this->musers->has_login('sess_id'));
 		$this->db->set('modate', time(), FALSE);
 		$this->_data = $this->input->post();
 		if (empty($this->_data['status'])) {
