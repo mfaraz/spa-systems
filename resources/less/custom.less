@@ -79,11 +79,23 @@ a:hover {
 				-moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 12px #333333;
 				-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 12px #333333;
 				box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 12px #333333;
+				&.panel-primary {
+					border-color: #370D01;
+					> .panel-heading {
+						background-color: #370D01;
+						border-color: #370D01;
+					}
+				}
 				.panel-body {
 					.form-group {
 						&.last {
 							margin-bottom: 0;
 						}
+					}
+					.btn-primary,
+					.btn-primary:hover {
+						background-color: #370D01;
+						border-color: #370D01;
 					}
 				}
 			}
@@ -94,7 +106,7 @@ a:hover {
 
 /* ---- navigation ---- */
 .navbar {
-	background-color: @color-blue-light;
+	background-color: #370D01;
 	max-height: 80px;
 	.shadow-bottom();
 	&.navbar-inverse {
@@ -349,12 +361,6 @@ form {
 			float: left !important;
 			width: 90px !important;
 		}
-	}
-	.only-invoice-number {
-		text-align: center;
-		margin-top: 30px !important;
-		padding-top: 30px !important;
-		border-top: 1px dotted @color-black;
 	}
 }
 /* ---- Invoice [END] ---- */
